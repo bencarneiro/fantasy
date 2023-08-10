@@ -42,7 +42,7 @@ class Position(models.Model):
         managed = True
         db_table = "position"   
 
-class DepthChart(models.model):
+class DepthChart(models.Model):
 
     team = models.ForeignKey(Team, on_delete=models.DO_NOTHING)
     roster_spot = models.SmallIntegerField(null=False)
@@ -138,6 +138,7 @@ class TeamDefense(models.Model):
 #     year = models.SmallIntegerField(null=False)
 
 class PlayerPassing(models.Model):
+
     player = models.ForeignKey(Player, on_delete=models.DO_NOTHING)
     year = models.SmallIntegerField(null=False)
     team = models.ForeignKey(Team, on_delete=models.DO_NOTHING)
@@ -170,6 +171,11 @@ class PlayerPassing(models.Model):
     comebacks = models.SmallIntegerField(null=False)
     gwd = models.SmallIntegerField(null=False)
 
+    class Meta:
+        managed = True
+        db_table = "player_passing"   
+
+
 class PlayerRushing(models.Model):
     player = models.ForeignKey(Player, on_delete=models.DO_NOTHING)
     year = models.SmallIntegerField(null=False)
@@ -186,6 +192,10 @@ class PlayerRushing(models.Model):
     rush_yds_per_att = models.FloatField()
     rush_yds_per_g = models.FloatField()
     fumbles = models.SmallIntegerField(null=False)
+
+    class Meta:
+        managed = True
+        db_table = "player_rushing"   
 
 class PlayerReceiving(models.Model):
     player = models.ForeignKey(Player, on_delete=models.DO_NOTHING)
@@ -208,6 +218,9 @@ class PlayerReceiving(models.Model):
     rec_yds_per_g = models.FloatField()
     fumbles = models.SmallIntegerField(null=False)
 
+    class Meta:
+        managed = True
+        db_table = "player_receiving"   
 
 class PlayerKicking(models.Model):
     player = models.ForeignKey(Player, on_delete=models.DO_NOTHING)
@@ -235,6 +248,11 @@ class PlayerKicking(models.Model):
     xpm = models.SmallIntegerField(null=False)
     xp_perc = models.FloatField()
 
+    class Meta:
+        managed = True
+        db_table = "player_kicking"   
+
+
 class PlayerReturning(models.Model):
     player = models.ForeignKey(Player, on_delete=models.DO_NOTHING)
     year = models.SmallIntegerField(null=False)
@@ -255,3 +273,6 @@ class PlayerReturning(models.Model):
     kick_ret_yds_per_ret = models.FloatField()
     all_purpose_yds = models.SmallIntegerField(null=False)
 
+    class Meta:
+        managed = True
+        db_table = "player_returning"   
