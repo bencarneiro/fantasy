@@ -9,12 +9,50 @@ class Sport(models.Model):
         managed = True
         db_table = "sport"
 
+class League(models.Model):
+
+    id = models.AutoField(primary_key=True)
+    name = models.CharField(max_length=128)
+    initials = models.CharField(max_length=16)
+    
+    class Meta:
+        managed = True
+        db_table = "league"
+
+
+class Conference(models.Model):
+
+    id = models.AutoField(primary_key=True)
+    name = models.CharField(max_length=128)
+    initials = models.CharField(max_length=16)
+    league = models.ForeignKey(League, on_delete=models.DO_NOTHING)
+    
+    class Meta:
+        managed = True
+        db_table = "conference"
+
+class Division(models.Model):
+
+    id = models.AutoField(primary_key=True)
+    name = models.CharField(max_length=128)
+    conference = models.ForeignKey(Conference, on_delete=models.DO_NOTHING)
+    league = models.ForeignKey(League, on_delete=models.DO_NOTHING)
+    
+    class Meta:
+        managed = True
+        db_table = "division"
+
+
+
 class Team(models.Model):
 
     id = models.AutoField(primary_key=True)
     name = models.CharField(max_length=128)
     short_name = models.CharField(max_length=64)
     slug = models.CharField(max_length=16)
+    league = models.ForeignKey(League, on_delete=models.DO_NOTHING)
+    conference = models.ForeignKey(Conference, on_delete=models.DO_NOTHING)
+    division = models.ForeignKey(Division, on_delete=models.DO_NOTHING)
     
     class Meta:
         managed = True
@@ -24,6 +62,7 @@ class Team(models.Model):
 class Player(models.Model):
 
     id = models.AutoField(primary_key=True)
+    fbr_slug = models.CharField(max_length=64)
     name = models.CharField(max_length=256)
     team = models.ForeignKey(Team, on_delete=models.DO_NOTHING)
     
