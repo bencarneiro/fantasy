@@ -64,7 +64,7 @@ class Player(models.Model):
     id = models.AutoField(primary_key=True)
     fbr_slug = models.CharField(max_length=64)
     name = models.CharField(max_length=256)
-    team = models.ForeignKey(Team, on_delete=models.DO_NOTHING)
+    team = models.ForeignKey(Team, null=True, on_delete=models.DO_NOTHING)
     
     class Meta:
         managed = True
@@ -180,9 +180,9 @@ class PlayerPassing(models.Model):
 
     player = models.ForeignKey(Player, on_delete=models.DO_NOTHING)
     year = models.SmallIntegerField(null=False)
-    team = models.ForeignKey(Team, on_delete=models.DO_NOTHING)
+    team = models.ForeignKey(Team, null=True, on_delete=models.DO_NOTHING)
     age = models.SmallIntegerField(null=False)
-    pos = models.CharField(max_length=16, default=None)
+    pos = models.ForeignKey(Position, on_delete=models.DO_NOTHING)
     g = models.SmallIntegerField(null=False)
     gs = models.SmallIntegerField(null=False)
     qb_rec = models.CharField(max_length=32, default=None)
@@ -218,7 +218,7 @@ class PlayerPassing(models.Model):
 class PlayerRushing(models.Model):
     player = models.ForeignKey(Player, on_delete=models.DO_NOTHING)
     year = models.SmallIntegerField(null=False)
-    team = models.ForeignKey(Team, on_delete=models.DO_NOTHING)
+    team = models.ForeignKey(Team, null=True, on_delete=models.DO_NOTHING)
     age = models.SmallIntegerField(null=False)
     pos = models.CharField(max_length=16, default=None)
     g = models.SmallIntegerField(null=False)
@@ -239,7 +239,7 @@ class PlayerRushing(models.Model):
 class PlayerReceiving(models.Model):
     player = models.ForeignKey(Player, on_delete=models.DO_NOTHING)
     year = models.SmallIntegerField(null=False)
-    team = models.ForeignKey(Team, on_delete=models.DO_NOTHING)
+    team = models.ForeignKey(Team, null=True, on_delete=models.DO_NOTHING)
     age = models.SmallIntegerField(null=False)
     pos = models.CharField(max_length=16, default=None)
     g = models.SmallIntegerField(null=False)
@@ -264,7 +264,7 @@ class PlayerReceiving(models.Model):
 class PlayerKicking(models.Model):
     player = models.ForeignKey(Player, on_delete=models.DO_NOTHING)
     year = models.SmallIntegerField(null=False)
-    team = models.ForeignKey(Team, on_delete=models.DO_NOTHING)
+    team = models.ForeignKey(Team, null=True, on_delete=models.DO_NOTHING)
     age = models.SmallIntegerField(null=False)
     pos = models.CharField(max_length=16, default=None)
     g = models.SmallIntegerField(null=False)
@@ -295,7 +295,7 @@ class PlayerKicking(models.Model):
 class PlayerReturning(models.Model):
     player = models.ForeignKey(Player, on_delete=models.DO_NOTHING)
     year = models.SmallIntegerField(null=False)
-    team = models.ForeignKey(Team, on_delete=models.DO_NOTHING)
+    team = models.ForeignKey(Team, null=True, on_delete=models.DO_NOTHING)
     age = models.SmallIntegerField(null=False)
     pos = models.CharField(max_length=16, default=None)
     g = models.SmallIntegerField(null=False)
