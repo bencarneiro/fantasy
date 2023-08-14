@@ -42,3 +42,48 @@ class Command(BaseCommand):
             name="P",
             full_name="Punter"
         ).save()
+
+        Position(
+            name="SS",
+            full_name="Strong Safety"
+        ).save()
+        Position(
+            name="FS",
+            full_name="Free Safety"
+        ).save()
+        Position(
+            name="DB",
+            full_name="Defensive Back"
+        ).save()
+        Position(
+            name="LCB",
+            full_name="Left Cornerback"
+        ).save()
+        Position(
+            name="RCB",
+            full_name="Right Cornerback"
+        ).save()
+        Position(
+            name="RT",
+            full_name="Right Tackle"
+        ).save()
+        Position(
+            name="LT",
+            full_name="Left Tackle"
+        ).save()
+        Position(
+            name="RG",
+            full_name="Right Guard"
+        ).save()
+        Position(
+            name="LG",
+            full_name="Left Guard"
+        ).save()
+        Position(
+            name="G",
+            full_name="Guard"
+        ).save()
+        Position(
+            name="C",
+            full_name="Center"
+        ).save()
