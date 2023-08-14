@@ -87,3 +87,7 @@ class Command(BaseCommand):
             name="C",
             full_name="Center"
         ).save()
+        Position(
+            name="DE",
+            full_name="Defensive End"
+        ).save()
