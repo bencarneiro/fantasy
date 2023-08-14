@@ -182,7 +182,7 @@ class PlayerPassing(models.Model):
     year = models.SmallIntegerField(null=False)
     team = models.ForeignKey(Team, null=True, on_delete=models.DO_NOTHING)
     age = models.SmallIntegerField(null=False)
-    pos = models.ForeignKey(Position, on_delete=models.DO_NOTHING)
+    pos = models.ForeignKey(Position, null=True, on_delete=models.DO_NOTHING)
     g = models.SmallIntegerField(null=False)
     gs = models.SmallIntegerField(null=False)
     qb_rec = models.CharField(max_length=32, default=None)

@@ -45,7 +45,10 @@ class Command(BaseCommand):
                     team = None
                 age = player.split('data-stat="age" >')[1].split('<')[0]
                 position_str = player.split('data-stat="pos" >')[1].split("<")[0]
-                position = Position.objects.get(name=position_str)
+                try:
+                    position = Position.objects.get(name=position_str)
+                except:
+                    position = None
                 g = player.split('data-stat="g" >')[1].split('<')[0]
                 gs = player.split('data-stat="gs" >')[1].split('<')[0]
                 qb_rec = player.split('data-stat="qb_rec"')[1].split('>')[1].split('<')[0]
