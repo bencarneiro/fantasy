@@ -14,7 +14,7 @@ class Command(BaseCommand):
             sleep(3)
             w = requests.get(f"https://www.pro-football-reference.com/years/{year}/passing.htm").text
             players = w.split('<th scope="row" class="right "')
-            players = players[2:]
+            players = players[1:]
             for player in players:
                 # print(player)
                 player_slug = player.split('data-append-csv="')[1].split('"')[0]
@@ -122,7 +122,7 @@ class Command(BaseCommand):
                 print(f"year: {year}")
                 # print(f"team slug: {team_slug}")
                 print(f"age: {age}")
-                print(f"Position: {position.full_name}")
+                # print(f"Position: {position.full_name}")
 
 
             #     name = team.split("</a>")[0]
