@@ -326,3 +326,78 @@ class PlayerReturning(models.Model):
     class Meta:
         managed = True
         db_table = "player_returning"   
+
+
+class PlayerPassingByTeam(models.Model):
+
+    player = models.ForeignKey(Player, on_delete=models.DO_NOTHING)
+    year = models.SmallIntegerField(null=False)
+    team = models.ForeignKey(Team, on_delete=models.DO_NOTHING)
+    age = models.SmallIntegerField(null=False)
+    pos = models.ForeignKey(Position, null=True, on_delete=models.DO_NOTHING)
+    g = models.SmallIntegerField(null=False)
+    gs = models.SmallIntegerField(null=False)
+    qb_rec = models.CharField(max_length=32, default=None)
+    pass_cmp = models.SmallIntegerField(null=False)
+    pass_att = models.SmallIntegerField(null=False)
+    pass_cmp_perc = models.FloatField(null=False)
+    pass_yds = models.SmallIntegerField(null=False)
+    pass_td = models.SmallIntegerField(null=False)
+    pass_td_perc = models.FloatField()
+    pass_int = models.SmallIntegerField(null=False)
+    pass_int_perc = models.FloatField()
+    # pass_first_down = models.SmallIntegerField(null=False)
+    pass_long = models.SmallIntegerField(null=False)
+    pass_yds_per_att = models.FloatField()
+    pass_adj_yds_per_att = models.FloatField()
+    pass_yds_per_cmp = models.FloatField()
+    pass_yds_per_g = models.FloatField()
+    pass_rating = models.FloatField()
+    qbr = models.FloatField()
+    pass_sacked = models.SmallIntegerField(null=False)
+    pass_sacked_yds = models.SmallIntegerField(null=False)
+    pass_sacked_perc = models.FloatField()
+    pass_net_yds_per_att = models.FloatField()
+    pass_adj_net_yds_per_att = models.FloatField()
+    comebacks = models.SmallIntegerField(null=False)
+    gwd = models.SmallIntegerField(null=False)
+
+    class Meta:
+        managed = True
+        db_table = "player_passing_by_team"   
+
+
+class PlayerScrimmageByTeam(models.Model):
+    player = models.ForeignKey(Player, on_delete=models.DO_NOTHING)
+    year = models.SmallIntegerField(null=False)
+    team = models.ForeignKey(Team, on_delete=models.DO_NOTHING)
+    age = models.SmallIntegerField(null=False)
+    pos = models.ForeignKey(Position, null=True, on_delete=models.DO_NOTHING)
+    g = models.SmallIntegerField(null=False)
+    gs = models.SmallIntegerField(null=False)
+    rush_att = models.SmallIntegerField(null=False)
+    rush_yds = models.SmallIntegerField(null=False)
+    rush_td = models.SmallIntegerField(null=False)
+    rush_long = models.SmallIntegerField(null=False)
+    rush_yds_per_att = models.FloatField(null=False)
+    rush_yds_per_g = models.FloatField(null=False)
+    rush_att_per_g = models.FloatField(null=False)
+    targets = models.SmallIntegerField(null=False)
+    rec = models.SmallIntegerField(null=False)
+    rec_yds = models.SmallIntegerField(null=False)
+    rec_yds_per_rec = models.FloatField(null=False)
+    rec_td = models.SmallIntegerField(null=False)
+    rec_long = models.SmallIntegerField(null=False)
+    rec_per_g = models.FloatField(null=False)
+    rec_yds_per_g = models.FloatField(null=False)
+    catch_pct = models.FloatField(null=False)
+    rec_yds_per_tgt = models.FloatField(null=False)
+    touches = models.SmallIntegerField(null=False)
+    yds_per_touch = models.FloatField(null=False)
+    yds_from_scrimmage = models.SmallIntegerField(null=False)
+    rush_receive_td = models.SmallIntegerField(null=False)
+    fumbles = models.SmallIntegerField(null=False)
+
+    class Meta:
+        managed = True
+        db_table = "player_scrimmage_by_team"
