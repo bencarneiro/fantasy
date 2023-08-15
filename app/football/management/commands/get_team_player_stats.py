@@ -61,28 +61,46 @@ class Command(BaseCommand):
                     pass_cmp = player.split('data-stat="pass_cmp" >')[1].split('<')[0]
                     pass_att = player.split('data-stat="pass_att" >')[1].split('<')[0]
                     pass_cmp_perc = player.split('data-stat="pass_cmp_perc" >')[1].split('<')[0]
+                    if not pass_cmp_perc:
+                        pass_cmp_perc = 0
                     pass_yds = player.split('data-stat="pass_yds" >')[1].split('<')[0]
                     pass_td = player.split('data-stat="pass_td" >')[1].split('<')[0]
                     pass_td_perc = player.split('data-stat="pass_td_perc" >')[1].split('<')[0]
+                    if not pass_td_perc:
+                         pass_td_perc = 0
                     pass_int = player.split('data-stat="pass_int" >')[1].split('<')[0]
                     pass_int_perc = player.split('data-stat="pass_int_perc" >')[1].split('<')[0]
+                    if not pass_int_perc:
+                        pass_int_perc = 0
                     # pass_first_down = player.split('data-stat="pass_first_down" >')[1].split('<')[0]
                     pass_long = player.split('data-stat="pass_long" >')[1].split('<')[0]
                     pass_yds_per_att = player.split('data-stat="pass_yds_per_att" >')[1].split('<')[0]
+                    if not pass_yds_per_att:
+                        pass_yds_per_att = 0
                     pass_adj_yds_per_att = player.split('data-stat="pass_adj_yds_per_att" >')[1].split('<')[0]
+                    if not pass_adj_yds_per_att:
+                        pass_adj_yds_per_att = 0
                     pass_yds_per_cmp = player.split('data-stat="pass_yds_per_cmp" >')[1].split('<')[0]
                     if not pass_yds_per_cmp:
                         pass_yds_per_cmp = 0
                     pass_yds_per_g = player.split('data-stat="pass_yds_per_g" >')[1].split('<')[0]
                     pass_rating = player.split('data-stat="pass_rating" >')[1].split('<')[0]
+                    if not pass_rating:
+                        pass_rating = 0
                     qbr = player.split('data-stat="qbr" >')[1].split('<')[0]
                     if not qbr:
                         qbr = 0
                     pass_sacked = player.split('data-stat="pass_sacked" >')[1].split('<')[0]
                     pass_sacked_yds = player.split('data-stat="pass_sacked_yds" >')[1].split('<')[0]
                     pass_sacked_perc = player.split('data-stat="pass_sacked_perc" >')[1].split('<')[0]
+                    if not pass_sacked_perc:
+                         pass_sacked_perc = 0
                     pass_net_yds_per_att = player.split('data-stat="pass_net_yds_per_att" >')[1].split('<')[0]
+                    if not pass_net_yds_per_att:
+                        pass_net_yds_per_att = 0
                     pass_adj_net_yds_per_att = player.split('data-stat="pass_adj_net_yds_per_att" >')[1].split('<')[0]
+                    if not pass_adj_net_yds_per_att:
+                        pass_adj_net_yds_per_att = 0
                     comebacks = player.split('data-stat="comebacks" >')[1].split('<')[0]
                     if not comebacks:
                         comebacks = 0
