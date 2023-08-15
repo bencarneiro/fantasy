@@ -50,6 +50,7 @@ class Team(models.Model):
     name = models.CharField(max_length=128)
     short_name = models.CharField(max_length=64)
     slug = models.CharField(max_length=16)
+    espn_slug = models.CharField(max_length=16, null=True)
     league = models.ForeignKey(League, on_delete=models.DO_NOTHING)
     conference = models.ForeignKey(Conference, on_delete=models.DO_NOTHING)
     division = models.ForeignKey(Division, on_delete=models.DO_NOTHING)
@@ -63,12 +64,22 @@ class Player(models.Model):
 
     id = models.AutoField(primary_key=True)
     fbr_slug = models.CharField(max_length=64)
+    espn_id = models.PositiveIntegerField(null=True)
     name = models.CharField(max_length=256)
     team = models.ForeignKey(Team, null=True, on_delete=models.DO_NOTHING)
     
     class Meta:
         managed = True
         db_table = "player"
+    
+class InjuryStatus(models.Model):
+
+    player = models.ForeignKey(Player, primary_key=True, null=False, on_delete=models.DO_NOTHING)
+    status = models.CharField(max_length=16)
+
+    class Meta:
+        managed = True
+        db_table = "injury_status"   
     
 class Position(models.Model):
 
