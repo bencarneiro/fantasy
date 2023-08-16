@@ -33,11 +33,11 @@ class Command(BaseCommand):
                         # print(player_url)
                         sleep(3)
                         player_page = requests.get(player_url).text
-                        try:
-                            team_slug = player_page.split('<strong>Team</strong>: <span><a href="')[1][7:10]
-                            team = Team.objects.get(slug=team_slug)
-                        except:
-                            team = None
+                        # try:
+                        #     team_slug = player_page.split('<strong>Team</strong>: <span><a href="')[1][7:10]
+                        #     team = Team.objects.get(slug=team_slug)
+                        # except:
+                        #     team = None
                         player_obj = Player(
                             name=player_name,
                             fbr_slug=player_slug,
@@ -161,11 +161,11 @@ class Command(BaseCommand):
                         # print(player_url)
                         sleep(3)
                         player_page = requests.get(player_url).text
-                        try:
-                            team_slug = player_page.split('<strong>Team</strong>: <span><a href="')[1][7:10]
-                            team = Team.objects.get(slug=team_slug)
-                        except:
-                            team = None
+                        # try:
+                        #     team_slug = player_page.split('<strong>Team</strong>: <span><a href="')[1][7:10]
+                        #     team = Team.objects.get(slug=team_slug)
+                        # except:
+                        #     team = None
                         player_obj = Player(
                             name=player_name,
                             fbr_slug=player_slug,
