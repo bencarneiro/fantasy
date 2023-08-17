@@ -73,8 +73,29 @@ def home(request):
             # points_per_g=(( Sum("rec_yds") / 10 ) + (Sum("rec_td") * 6)) / (Sum("g")),
             # points_per_g_ppr=(( Sum("rec_yds") / 10 ) + (Sum("rec_td") * 6) + (Sum("rec"))) / (Sum("g"))
         )
+        kicking_data = PlayerKicking.objects.filter(player=player_projection.player, year__gte=2020, year__lte=2022).aggregate(
+            seasons=Count("year"),
+            fga=Sum("fga"),
+            fgm=Sum("fgm"),
+            fga1=Sum("fga1"),
+            fgm1=Sum("fgm1"),
+            fga2=Sum("fga2"),
+            fgm2=Sum("fgm2"),
+            fga3=Sum("fga3"),
+            fgm3=Sum("fgm3"),
+            fga4=Sum("fga4"),
+            fgm4=Sum("fgm4"),
+            fga5=Sum("fga5"),
+            fgm5=Sum("fgm5"),
+            xpa=Sum("xpa"),
+            xpm=Sum("xpm"),
+            g=Sum("g"),
+            points=((Sum("fgm1") * 3) - (Sum("fga1") - Sum("fgm1"))) + ((Sum("fgm2") * 3) - (Sum("fga2") - Sum("fgm2"))) + ((Sum("fgm3") * 3) - (Sum("fga3") - Sum("fgm3"))) + ((Sum("fgm4") * 4) - (Sum("fga4") - Sum("fgm4"))) + ((Sum("fgm5") * 5) - (Sum("fga5") - Sum("fgm5"))) + (Sum("xpm") - (Sum("xpa") - Sum("xpm")))
+            # points=( Sum("rec_yds") / 10 ) + (Sum("rec_td") * 6),
+            # points_ppr=( Sum("rec_yds") / 10 ) + (Sum("rec_td") * 6) + (Sum("rec"))
+        )
 
-        if not passing_data['seasons'] and not rushing_data['seasons'] and not receiving_data['seasons']:
+        if not passing_data['seasons'] and not rushing_data['seasons'] and not receiving_data['seasons'] and not kicking_data['seasons']:
             ppr_avg = None
             standard_avg = None
         else:
@@ -85,6 +106,8 @@ def home(request):
                 seasons = rushing_data['seasons']
             if receiving_data['seasons'] and receiving_data['seasons'] > seasons:
                 seasons = receiving_data['seasons']
+            if kicking_data['seasons'] and kicking_data['seasons'] > seasons:
+                seasons = kicking_data['seasons']
             if not passing_data['points']:
                 pass_pts = 0
             else:
@@ -93,6 +116,10 @@ def home(request):
                 rush_pts = 0
             else:
                 rush_pts = rushing_data['points']
+            if not kicking_data['points']:
+                kicking_pts = 0
+            else:
+                kicking_pts = kicking_data['points']
             if not receiving_data['points']:
                 rec_pts = 0
             else:
@@ -101,11 +128,11 @@ def home(request):
                 rec_pts_ppr = 0
             else:
                 rec_pts_ppr = receiving_data['points_ppr']
-            ppr_avg = round((rec_pts_ppr + rush_pts + pass_pts) / seasons)
-            standard_avg = round((rec_pts + rush_pts + pass_pts) / seasons)
+            ppr_avg = round((rec_pts_ppr + rush_pts + pass_pts + kicking_pts) / seasons)
+            standard_avg = round((rec_pts + rush_pts + pass_pts + kicking_pts) / seasons)
 
 
-        if not passing_data['g'] and not rushing_data['g'] and not receiving_data['g']:
+        if not passing_data['g'] and not rushing_data['g'] and not receiving_data['g'] and not kicking_data['g']:
             ppg_ppr = None
             ppg_standard = None
         else:
@@ -116,24 +143,26 @@ def home(request):
                 g = rushing_data['g']
             if receiving_data['g'] and receiving_data['g'] > g:
                 g = receiving_data['g']
-            if not passing_data['points']:
-                pass_pts = 0
-            else:
-                pass_pts = passing_data['points']
-            if not rushing_data['points']:
-                rush_pts = 0
-            else:
-                rush_pts = rushing_data['points']
-            if not receiving_data['points']:
-                rec_pts = 0
-            else:
-                rec_pts = receiving_data['points']
-            if not receiving_data['points_ppr']:
-                rec_pts_ppr = 0
-            else:
-                rec_pts_ppr = receiving_data['points_ppr']
-            ppg_ppr = round((rec_pts_ppr + rush_pts + pass_pts) / g)
-            ppg_standard = round((rec_pts + rush_pts + pass_pts) / g)
+            if kicking_data['g'] and kicking_data['g'] > g:
+                g = kicking_data['g']
+            # if not passing_data['points']:
+            #     pass_pts = 0
+            # else:
+            #     pass_pts = passing_data['points']
+            # if not rushing_data['points']:
+            #     rush_pts = 0
+            # else:
+            #     rush_pts = rushing_data['points']
+            # if not receiving_data['points']:
+            #     rec_pts = 0
+            # else:
+            #     rec_pts = receiving_data['points']
+            # if not receiving_data['points_ppr']:
+            #     rec_pts_ppr = 0
+            # else:
+            #     rec_pts_ppr = receiving_data['points_ppr']
+            ppg_ppr = round((rec_pts_ppr + rush_pts + pass_pts + kicking_pts) / g, 1)
+            ppg_standard = round((rec_pts + rush_pts + pass_pts + kicking_pts) / g, 1)
 
 
         if not rushing_data['attempts'] and not receiving_data['receptions']:
