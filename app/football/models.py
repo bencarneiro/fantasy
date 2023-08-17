@@ -64,7 +64,7 @@ class Player(models.Model):
 
     id = models.AutoField(primary_key=True)
     fbr_slug = models.CharField(max_length=64)
-    espn_id = models.PositiveIntegerField(null=True)
+    espn_id = models.IntegerField(null=True)
     name = models.CharField(max_length=256)
     team = models.ForeignKey(Team, null=True, on_delete=models.DO_NOTHING)
     
@@ -401,3 +401,20 @@ class PlayerScrimmageByTeam(models.Model):
     class Meta:
         managed = True
         db_table = "player_scrimmage_by_team"
+
+
+class PlayerProjections(models.Model):
+
+    player = models.ForeignKey(Player, on_delete=models.DO_NOTHING)
+    proj_carries = models.FloatField(null=True)
+    proj_rush_yd  = models.FloatField(null=True)
+    proj_rush_td = models.FloatField(null=True)
+    proj_tgt = models.FloatField(null=True)
+    proj_rec = models.FloatField(null=True)
+    proj_rec_yd = models.FloatField(null=True)
+    proj_rec_td = models.FloatField(null=True)
+    proj_points = models.FloatField(null=True)
+
+    class Meta:
+        managed = True
+        db_table = "player_projection"
