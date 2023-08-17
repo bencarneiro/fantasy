@@ -1,0 +1,14 @@
+<html>
+    <h1>{{ team }}</h1>
+    <h1>{{rush_yds}}</h1>
+    <h1>{{pass_yds}}</h1>
+    <h1>{{ rush_att }}</h1>
+    <h1>{{ pass_att }}</h1>
+    {% for player in depth_chart %}
+    <h2>
+        {{ player.name }}
+        {{ player.string }}
+        {{ player.position }}
+    </h2>
+    {% endfor %}
+</html>

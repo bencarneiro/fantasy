@@ -1,0 +1,106 @@
+<html>
+    <style>
+        h1 {
+            text-align: center;
+        }
+        th {
+        text-align: center;
+        padding: 10px
+        }
+        td {
+        text-align: center;
+        }
+    </style>
+    <h1>Draft Buddy</h1>
+    <table>
+        <tr>
+            <th>id</th>
+            <th>
+                Player
+            </th>
+            <th>
+                String
+            </th>
+            <th>
+                Position
+            </th>
+            <th>
+                Team
+            </th>
+            <th>
+                PPR Projection </br> (2023)
+            </th>
+            <th>
+                Standard Projection </br> (2023)
+            </th>
+            <th>
+                PPR Average </br> (2020-2022)
+            </th>
+            <th>
+                STANDARD Average </br> (2020-2022)
+            </th>
+            <th>
+                Points Per Game (PPR)</br> (2020-2022)
+            </th>
+            <th>
+                Points Per Game (Standard)</br> (2020-2022)
+            </th>
+            <th>
+                PPR Points Per Touch </br> (2020-2022)
+            </th>
+            <th>
+                STANDARD Points Per Touch </br> (2020-2022)
+            </th>
+            <th>
+                Rush Yds Per G </br> (2020-2022)
+            </th>
+            <th>
+                Rec Yds Per G </br> (2020-2022)
+            </th>
+
+            <th>
+            Attempts per game
+            Completions per game
+            Pass Yds per game
+            Pass TDs per game
+            Interceptions per game
+            Fumbles per game
+
+            Rush Att per game
+            Rush Yds per game
+            Rush TDs per game
+            Fumbles per game
+
+            Targets per game
+            Catches per game
+            Rec Yards per game
+            Rec TDs per game
+            Fumbles per game
+
+            FGA 
+            FGM
+            </th>
+        </tr>
+
+        {% for player in fantasy %}
+        <tr>
+            <td> {{ player.index }} </td>
+            <td> {{ player.name }} </td>
+            <td> {{ player.string }} </td>
+            <td> {{ player.position }} </td>
+            <td> {{ player.team }} </td>
+            <td> {{ player.PPR}} </td>
+            <td> {{ player.STANDARD}} </td>
+            <td> {{ player.ppr_avg }} </td>
+            <td> {{ player.standard_avg }} </td>
+            <td> {{ player.ppg_ppr }} </td>
+            <td> {{ player.ppg_standard }} </td>
+            <td> {{ player.points_per_touch_ppr }} </td>
+            <td> {{ player.points_per_touch_standard }} </td>
+            <td> {{ player.rush_yds_per_g}} </td>
+            <td> {{ player.rec_yds_per_g}} </td>
+        </tr>
+        {% endfor %}
+    </table>
+
+</html>

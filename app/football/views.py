@@ -7,7 +7,7 @@ from django.db.models import Sum, Count, Q, F, Avg, Value
 from django.views import View
 from django.views.decorators.csrf import csrf_exempt
 from django.http import JsonResponse
-from football.models import DepthChart, PlayerPassing, PlayerProjections, DepthChart, PlayerKicking, PlayerRushing, PlayerReceiving, PlayerReturning
+from football.models import DepthChart, PlayerPassing, PlayerProjections, DepthChart, PlayerKicking, PlayerRushing, PlayerReceiving, PlayerReturning, Team, TeamOffense, TeamDefense
 
 @csrf_exempt
 def depth_chart(request):
@@ -216,8 +216,10 @@ def home(request):
 
         if player_projection.player.team:
             team_name = player_projection.player.team.short_name
+            team_slug = player_projection.player.team.slug
         else:
             team_name = "Free Agent"
+            team_slug = ""
         player_id = player_projection.player.id
 
         depth_chart = DepthChart.objects.filter(player_id=player_id)
@@ -243,6 +245,7 @@ def home(request):
         new_player = {
             "name": player_projection.player.name,
             "team": team_name,
+            "team_slug": team_slug,
             "PPR": round(ppr, 1),
             "STANDARD": round(standard, 1),
             "position": position,
@@ -262,3 +265,36 @@ def home(request):
         index += 1
     context = {"fantasy": players}
     return render(request, "home.html", context=context)
+
+
+@csrf_exempt
+def team_page(request):
+    if "team" in request.GET and request.GET['team']:
+
+        
+        team = Team.objects.get(slug=request.GET['team'])
+        depth_chart = DepthChart.objects.filter(team=team).order_by("roster_spot","string")
+        dc = []
+        for entry in depth_chart:
+            dc += [{
+                "name": entry.player.name,
+                "position": entry.position.name,
+                "string": entry.string
+            }]
+        
+
+        team_offense = TeamOffense.objects.filter(team=team, year=2022).aggregate(
+
+            rush_yds = Sum("rush_yds"),
+            pass_yds = Sum("pass_yds"),
+            rush_att = Sum("rush_att"),
+            pass_att = Sum("pass_att")
+        )
+        context = {
+            "team": team.name, 
+            "depth_chart": dc, 
+            "rush_yds": team_offense['rush_yds'],
+            "pass_yds": team_offense['pass_yds'],
+            "rush_att": team_offense['rush_att'], 
+            "pass_att": team_offense['pass_att']}
+        return render(request, "team.html", context=context)
