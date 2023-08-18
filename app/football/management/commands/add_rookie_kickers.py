@@ -26,6 +26,8 @@ class Command(BaseCommand):
             string=1
         )
         dc_1.save()
+        b_aubrey.team=cowboys
+        b_aubrey.save()
 
         dc_2 = DepthChart(
             player=t_brown,
@@ -35,6 +37,9 @@ class Command(BaseCommand):
             string=1
         )
         dc_2.save()
+        t_brown.team=rams
+        t_brown.save()
+
                 
         dc_3 = DepthChart(
             player=a_carlson,
@@ -44,6 +49,8 @@ class Command(BaseCommand):
             string=1
         )
         dc_3.save()
+        a_carlson.team=gb
+        a_carlson.save()
         
         dc_4 = DepthChart(
             player=j_moody,
@@ -53,3 +60,5 @@ class Command(BaseCommand):
             string=1
         )
         dc_4.save()
+        j_moody.team=sf
+        j_moody.save()
