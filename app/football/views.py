@@ -323,6 +323,23 @@ def team_page(request):
         # print(team_offense['rush_pct'])
         rush_pct = team_offense['rush_att'] / (team_offense['rush_att'] + team_offense['pass_att'])
         pass_pct = team_offense['pass_att'] / (team_offense['rush_att'] + team_offense['pass_att'])
+
+        team_defense = TeamDefense.objects.filter(team=team, year=2022).aggregate(
+
+            rush_yds = Sum("rush_yds"),
+            pass_yds = Sum("pass_yds"),
+            rush_att = Sum("rush_att"),
+            pass_att = Sum("pass_att"),
+            rush_td = Sum("rush_td"),
+            pass_td = Sum("pass_td"),
+            completions = Sum("pass_cmp"),
+            rush_yds_per_att = Sum("rush_yds_per_att"),
+            pass_net_yds_per_att = Sum("pass_net_yds_per_att")
+            # rush_pct = Round(Sum("rush_att") / (Sum("rush_att") + Sum("pass_att")), 3)
+        )
+        # print(team_offense['rush_pct'])
+        rush_pct_d = team_defense['rush_att'] / (team_defense['rush_att'] + team_defense['pass_att'])
+        pass_pct_d = team_defense['pass_att'] / (team_defense['rush_att'] + team_defense['pass_att'])
         # yards_per_rush = team_offense['rush_yds'] / team_offense['rush_att']
         # pass_net_yds_per_att = 
 
@@ -343,6 +360,17 @@ def team_page(request):
             "rush_pct": rush_pct,
             "pass_pct": pass_pct,
             "rush_yds_per_att": team_offense['rush_yds_per_att'],
-            "pass_net_yds_per_att": team_offense['pass_net_yds_per_att']
+            "pass_net_yds_per_att": team_offense['pass_net_yds_per_att'],
+            "rush_yds_d": team_defense['rush_yds'],
+            "pass_yds_d": team_defense['pass_yds'],
+            "rush_td_d": team_defense['rush_td'],
+            "pass_td_d": team_defense['pass_td'],
+            "rush_att_d": team_defense['rush_att'], 
+            "pass_att_d": team_defense['pass_att'],
+            "completions_d": team_defense['completions'],
+            "rush_pct_d": rush_pct_d,
+            "pass_pct_d": pass_pct_d,
+            "rush_yds_per_att_d": team_defense['rush_yds_per_att'],
+            "pass_net_yds_per_att_d": team_defense['pass_net_yds_per_att']
         }
         return render(request, "team.html", context=context)

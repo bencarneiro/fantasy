@@ -301,4 +301,80 @@
 
     {% endfor %}
 </table>
+
+
+<h1>Team Defense</h1>
+<table>
+    <tr>
+        <th>
+            Rush Attempts
+        </th>
+        <th>
+            Rush Yards
+        </th>
+        <th>
+            Rush Touchdowns
+        </th>
+        <th>
+            Yards Per Rush
+        </th>
+        <th>
+            Pass Attempts
+        </th>
+        <th>
+            Completions
+        </th>
+        <th>
+            Pass Yards
+        </th>
+        <th>
+            Pass Touchdowns
+        </th>
+        <th>
+            Net Yards Per Passing Attempt
+        </th>
+        <th>
+            Rush Percentage
+        </th>
+        <th>
+            Pass Percentage
+        </th>
+    </tr>
+    <tr>
+        <td>
+            {{ rush_att_d }}
+        </td>
+        <td>
+            {{ rush_yds_d }}
+        </td>
+        <td>
+            {{ rush_td_d }}
+        </td>
+        <td>
+            {{ rush_yds_per_att_d }}
+        </td>
+        <td>
+            {{ pass_att_d }}
+        </td>
+        <td>
+            {{ completions_d }}
+        </td>
+        <td>
+            {{ pass_yds_d }}
+        </td>
+        <td>
+            {{ pass_td_d }}
+        </td>
+        <td>
+            {{ pass_net_yds_per_att_d }}
+        </td>
+        <td>
+            {{ rush_pct_d|floatformat:3 }}
+        </td>
+        <td>
+            {{ pass_pct_d|floatformat:3 }}
+        </td>
+    </tr>
+</table>
+
 </html>
