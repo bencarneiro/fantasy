@@ -12,9 +12,15 @@
         padding: 5px;
         }
     </style>
+
     <h1>Draft Buddy</h1>
-    <table>
-        <tr>
+
+
+
+    <script src="https://www.kryogenix.org/code/browser/sorttable/sorttable.js"></script>
+    <table class="sortable">
+        <thead>
+        <tr class="header">
             <th>id</th>
             <th>
                 Player
@@ -85,6 +91,7 @@
             FGM
             </th>
         </tr>
+    </thead>
 
         {% for player in fantasy %}
         <tr>
