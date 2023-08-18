@@ -1,14 +1,172 @@
 <html>
+
+
+    <style>
+
+        th {
+        text-align: center;
+        padding: 10px
+        }
+        td {
+        text-align: center;
+        }
+    </style>
+
+
     <h1>{{ team }}</h1>
     <h1>{{rush_yds}}</h1>
     <h1>{{pass_yds}}</h1>
     <h1>{{ rush_att }}</h1>
     <h1>{{ pass_att }}</h1>
+
+
+
+    <h1>2022 Passing</h1>
+    <table>
+        <tr>
+            <th>
+                Player
+            </th>
+            <th>
+                Games Played
+            </th>
+            <th>
+                Games Started
+            </th>
+            <th>
+                Pass Yards
+            </th>
+            <th>
+                Pass TDs
+            </th>
+            <th>
+                Completions 
+            </th>
+            <th>
+                Attempts
+            </th>
+        </tr>
+        {% for player in team_pass_offense %}
+        <tr>
+            <td>
+                {{ player.player.name }}
+            </td>
+            <td>
+                {{ player.g }}
+            </td>
+            <td>
+                {{ player.gs }}
+            </td>
+            <td>
+                {{ player.pass_yds }}
+            </td>
+            <td>
+                {{ player.pass_td }}
+            </td>
+            <td>
+                {{ player.pass_cmp }}
+            </td>
+            <td>
+                {{ player.pass_att }}
+            </td>
+        </tr>
+        {% endfor %}
+    </table>
+
+    <h1>2022 Scrimmage Yards</h1>
+    <table>
+        <tr>
+            <th>
+                Player
+            </th>
+            <th>
+                Games Played
+            </th>
+            <th>
+                Games Started
+            </th>
+            <th>
+                Rush Attempts
+            </th>
+            <th>
+                Rush Yds
+            </th>
+            <th>
+                Rush Tds
+            </th>
+            <th>
+                Targets
+            </th>
+            <th>
+                Receptions
+            </th>
+            <th>
+                Receiving Yds
+            </th>
+            <th>
+                Receiving Tds
+            </th>
+            <th>
+                Fumbles
+            </th>
+            <th>
+                All Purpose Yds
+            </th>
+            <th>
+                All TD
+            </th>
+        </tr>
+        {% for player in team_scrimmage_offense %}
+        <tr>
+            <td>
+                {{ player.player.name }}
+            </td>
+            <td>
+                {{ player.g }}
+            </td>
+            <td>
+                {{ player.gs }}
+            </td>
+            <td>
+                {{ player.rush_att }}
+            </td>
+            <td>
+                {{ player.rush_yds }}
+            </td>
+            <td>
+                {{ player.rush_td }}
+            </td>
+            <td>
+                {{ player.targets }}
+            </td>
+            <td>
+                {{ player.rec }}
+            </td>
+            <td>
+                {{ player.rec_yds }}
+            </td>
+            <td>
+                {{ player.rec_td }}
+            </td>
+            <td>
+                {{ player.fumbles }}
+            </td>
+            <td>
+                {{ player.yds_from_scrimmage }}
+            </td>
+            <td>
+                {{ player.rush_receive_td }}
+            </td>
+        </tr>
+        {% endfor %}
+        
+    </table>
+
     {% for player in depth_chart %}
-    <h2>
+    <p>
         {{ player.name }}
         {{ player.string }}
         {{ player.position }}
-    </h2>
+    </p>
     {% endfor %}
 </html>

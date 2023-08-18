@@ -7,7 +7,7 @@ from django.db.models import Sum, Count, Q, F, Avg, Value
 from django.views import View
 from django.views.decorators.csrf import csrf_exempt
 from django.http import JsonResponse
-from football.models import DepthChart, PlayerPassing, PlayerProjections, DepthChart, PlayerKicking, PlayerRushing, PlayerReceiving, PlayerReturning, Team, TeamOffense, TeamDefense
+from football.models import DepthChart, PlayerPassing, PlayerProjections, DepthChart, PlayerKicking, PlayerRushing, PlayerReceiving, PlayerReturning, Team, TeamOffense, TeamDefense, PlayerPassingByTeam, PlayerScrimmageByTeam
 
 @csrf_exempt
 def depth_chart(request):
@@ -290,9 +290,14 @@ def team_page(request):
             rush_att = Sum("rush_att"),
             pass_att = Sum("pass_att")
         )
+
+        team_pass_offense = PlayerPassingByTeam.objects.filter(team=team, year=2022)
+        team_scrimmage_offense = PlayerScrimmageByTeam.objects.filter(team=team, year=2022)
         context = {
             "team": team.name, 
             "depth_chart": dc, 
+            "team_pass_offense": team_pass_offense,
+            "team_scrimmage_offense": team_scrimmage_offense,
             "rush_yds": team_offense['rush_yds'],
             "pass_yds": team_offense['pass_yds'],
             "rush_att": team_offense['rush_att'], 

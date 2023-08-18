@@ -235,22 +235,22 @@ class Command(BaseCommand):
                         catch_pct = 0
                     else:
                         catch_pct = catch_pct[:-1]
-                    rec_yds_per_tgt = player.split('data-stat="gs" >')[1].split('<')[0]
+                    rec_yds_per_tgt = player.split('data-stat="rec_yds_per_tgt" >')[1].split('<')[0]
                     if not rec_yds_per_tgt:
                          rec_yds_per_tgt = 0
-                    touches = player.split('data-stat="gs" >')[1].split('<')[0]
+                    touches = player.split('data-stat="touches" >')[1].split('<')[0]
                     if not touches:
                         touches = 0
-                    yds_per_touch = player.split('data-stat="gs" >')[1].split('<')[0]
+                    yds_per_touch = player.split('data-stat="yds_per_touch" >')[1].split('<')[0]
                     if not yds_per_touch:
                         yds_per_touch = 0
-                    yds_from_scrimmage = player.split('data-stat="gs" >')[1].split('<')[0]
+                    yds_from_scrimmage = player.split('data-stat="yds_from_scrimmage" >')[1].split('<')[0]
                     if not yds_from_scrimmage:
                         yds_from_scrimmage = 0
-                    rush_receive_td = player.split('data-stat="gs" >')[1].split('<')[0]
+                    rush_receive_td = player.split('data-stat="rush_receive_td" >')[1].split('<')[0]
                     if not rush_receive_td:
                         rush_receive_td = 0
-                    fumbles = player.split('data-stat="gs" >')[1].split('<')[0]
+                    fumbles = player.split('data-stat="fumbles" >')[1].split('<')[0]
                     if not fumbles:
                         fumbles = 0
                     psbt = PlayerScrimmageByTeam(
