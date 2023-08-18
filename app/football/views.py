@@ -273,14 +273,27 @@ def team_page(request):
 
         
         team = Team.objects.get(slug=request.GET['team'])
-        depth_chart = DepthChart.objects.filter(team=team).order_by("roster_spot","string")
-        dc = []
+        depth_chart = DepthChart.objects.filter(team=team).exclude(position_id__name__in=["C", "RT", "LT", "RG", "LG"]).order_by("roster_spot","string")
+        dc = {}
         for entry in depth_chart:
-            dc += [{
-                "name": entry.player.name,
-                "position": entry.position.name,
-                "string": entry.string
-            }]
+            if entry.roster_spot in dc:
+                dc[entry.roster_spot] += [{
+                    "name": entry.player.name,
+                    "position": entry.position.name,
+                    "string": entry.string
+                }]
+            else:
+                dc[entry.roster_spot] = [{
+                    "name": entry.player.name,
+                    "position": entry.position.name,
+                    "string": entry.string
+                }]
+        print(dc)
+            # dc += [{
+            #     "name": entry.player.name,
+            #     "position": entry.position.name,
+            #     "string": entry.string
+            # }]
         
 
         team_offense = TeamOffense.objects.filter(team=team, year=2022).aggregate(

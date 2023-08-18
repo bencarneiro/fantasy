@@ -162,11 +162,51 @@
         
     </table>
 
-    {% for player in depth_chart %}
+    <!-- {% for player in depth_chart %}
     <p>
         {{ player.name }}
         {{ player.string }}
         {{ player.position }}
     </p>
+    {% endfor %} -->
+    <h1>Depth Chart</h1>
+    <table>
+        <tr>
+            <th>
+                Starter
+            </th>
+
+            <th>
+                Backup
+            </th>
+
+            <th>
+                3rd String
+            </th>
+            <th>
+                4th String
+            </th>
+            <th>
+                5th String
+            </th>
+            <th>
+                6th String
+            </th>
+            <th>
+                7th String
+            </th>
+        </tr>
+ 
+    {% for key, value in depth_chart.items %}
+    <tr>
+        {% for player in value %}
+        <td>
+            {{player.name}} </br>
+            {{player.string}} </br>
+            {{player.position}} </br>
+        </td>
+        {% endfor %}
+    </tr>
     {% endfor %}
+</table>
 </html>
