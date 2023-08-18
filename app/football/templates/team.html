@@ -1,6 +1,7 @@
 <html>
 
 
+<script src="https://www.kryogenix.org/code/browser/sorttable/sorttable.js"></script>
     <style>
         h1{
             text-align: center
@@ -100,10 +101,13 @@
 
 
     <h1>2022 Passing</h1>
-    <table>
+    <table class="sortable">
         <tr>
             <th>
                 Player
+            </th>
+            <th>
+                Position
             </th>
             <th>
                 Games Played
@@ -130,6 +134,9 @@
                 {{ player.player.name }}
             </td>
             <td>
+                {{player.pos.name}}
+            </td>
+            <td>
                 {{ player.g }}
             </td>
             <td>
@@ -152,10 +159,13 @@
     </table>
 
     <h1>2022 Scrimmage Yards</h1>
-    <table>
+    <table class="sortable">
         <tr>
             <th>
                 Player
+            </th>
+            <th>
+                Position
             </th>
             <th>
                 Games Played
@@ -198,6 +208,9 @@
         <tr>
             <td>
                 {{ player.player.name }}
+            </td>
+            <td>
+                {{player.pos.name}}
             </td>
             <td>
                 {{ player.g }}
