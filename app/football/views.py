@@ -28,6 +28,10 @@ def depth_chart(request):
 
 @csrf_exempt
 def home(request):
+    if "position" in request.GET and request.GET['position']:
+        position_param = request.GET['position']
+    else:
+        position_param = None
     players = []
     fantasy_projections = PlayerProjections.objects.all()
     index = 1
@@ -231,20 +235,21 @@ def home(request):
             # roster_spot = depth_chart[0].roster_spot
             string = depth_chart[0].string
         elif "D/ST" in player_projection.player.name:
-            position = "Defense"
+            position = "D/ST"
             team_name = player_projection.player.name.split(" ")[0]
             # roster_spot = 1
             string = 1
         else:
             pk = PlayerKicking.objects.filter(player_id=player_projection.player.id)
             if len(pk) > 0:
-                position = "Kicker"
+                position = "K"
                 # roster_spot = 1
                 string = 1
             else:
                 position = "N/A"
                 # roster_spot = "N/A"
                 string = "N/A"
+        position_url = "?position=" + position
         new_player = {
             "name": player_projection.player.name,
             "espn_link": espn_link,
@@ -253,6 +258,7 @@ def home(request):
             "PPR": round(ppr, 1),
             "STANDARD": round(standard, 1),
             "position": position,
+            "position_url": position_url,
             # "roster_spot": roster_spot,
             "string": string,
             "rush_yds_per_g": rushing_data['yards_per_game'],
@@ -265,8 +271,9 @@ def home(request):
             "points_per_touch_standard": points_per_touch_standard,
             "index": index
         }
-        players += [new_player]
-        index += 1
+        if not position_param or position == position_param:
+            players += [new_player]
+            index += 1
     context = {"fantasy": players}
     return render(request, "home.html", context=context)
 
