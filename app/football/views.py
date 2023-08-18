@@ -4,6 +4,8 @@ from django.shortcuts import render
 
 
 from django.db.models import Sum, Count, Q, F, Avg, Value
+from django.db.models.functions import Round
+
 from django.views import View
 from django.views.decorators.csrf import csrf_exempt
 from django.http import JsonResponse
@@ -30,6 +32,7 @@ def home(request):
     fantasy_projections = PlayerProjections.objects.all()
     index = 1
     for player_projection in fantasy_projections:
+        espn_link = "https://www.espn.com/nfl/player/stats/_/id/" + str(player_projection.player.espn_id)
         if player_projection.proj_points < .25:
             continue
         # if player_projection.proj_points ==
@@ -216,10 +219,10 @@ def home(request):
 
         if player_projection.player.team:
             team_name = player_projection.player.team.short_name
-            team_slug = player_projection.player.team.slug
+            team_url = "/team/?team=" + player_projection.player.team.slug
         else:
             team_name = "Free Agent"
-            team_slug = ""
+            team_url = ""
         player_id = player_projection.player.id
 
         depth_chart = DepthChart.objects.filter(player_id=player_id)
@@ -244,8 +247,9 @@ def home(request):
                 string = "N/A"
         new_player = {
             "name": player_projection.player.name,
+            "espn_link": espn_link,
             "team": team_name,
-            "team_slug": team_slug,
+            "team_url": team_url,
             "PPR": round(ppr, 1),
             "STANDARD": round(standard, 1),
             "position": position,
@@ -301,8 +305,19 @@ def team_page(request):
             rush_yds = Sum("rush_yds"),
             pass_yds = Sum("pass_yds"),
             rush_att = Sum("rush_att"),
-            pass_att = Sum("pass_att")
+            pass_att = Sum("pass_att"),
+            rush_td = Sum("rush_td"),
+            pass_td = Sum("pass_td"),
+            completions = Sum("pass_cmp"),
+            rush_yds_per_att = Sum("rush_yds_per_att"),
+            pass_net_yds_per_att = Sum("pass_net_yds_per_att")
+            # rush_pct = Round(Sum("rush_att") / (Sum("rush_att") + Sum("pass_att")), 3)
         )
+        # print(team_offense['rush_pct'])
+        rush_pct = team_offense['rush_att'] / (team_offense['rush_att'] + team_offense['pass_att'])
+        pass_pct = team_offense['pass_att'] / (team_offense['rush_att'] + team_offense['pass_att'])
+        # yards_per_rush = team_offense['rush_yds'] / team_offense['rush_att']
+        # pass_net_yds_per_att = 
 
         team_pass_offense = PlayerPassingByTeam.objects.filter(team=team, year=2022)
         team_scrimmage_offense = PlayerScrimmageByTeam.objects.filter(team=team, year=2022)
@@ -313,6 +328,14 @@ def team_page(request):
             "team_scrimmage_offense": team_scrimmage_offense,
             "rush_yds": team_offense['rush_yds'],
             "pass_yds": team_offense['pass_yds'],
+            "rush_td": team_offense['rush_td'],
+            "pass_td": team_offense['pass_td'],
             "rush_att": team_offense['rush_att'], 
-            "pass_att": team_offense['pass_att']}
+            "pass_att": team_offense['pass_att'],
+            "completions": team_offense['completions'],
+            "rush_pct": rush_pct,
+            "pass_pct": pass_pct,
+            "rush_yds_per_att": team_offense['rush_yds_per_att'],
+            "pass_net_yds_per_att": team_offense['pass_net_yds_per_att']
+        }
         return render(request, "team.html", context=context)

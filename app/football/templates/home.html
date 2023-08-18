@@ -9,6 +9,7 @@
         }
         td {
         text-align: center;
+        padding: 5px;
         }
     </style>
     <h1>Draft Buddy</h1>
@@ -17,6 +18,9 @@
             <th>id</th>
             <th>
                 Player
+            </th>
+            <th>
+                Links
             </th>
             <th>
                 String
@@ -84,11 +88,18 @@
 
         {% for player in fantasy %}
         <tr>
-            <td> {{ player.index }} </td>
-            <td> {{ player.name }} </td>
+            <td>  {{ player.index }} </td>
+            <td> 
+                {{player.name}}
+             </td>
+             <td>
+                <a href={{ player.espn_link }} target="_blank"> ESPN </a> 
+             </td>
             <td> {{ player.string }} </td>
             <td> {{ player.position }} </td>
-            <td> {{ player.team }} </td>
+            <td>
+                <a href={{ player.team_url }} target="_blank"> {{ player.team }} </a>
+            </td>
             <td> {{ player.PPR}} </td>
             <td> {{ player.STANDARD}} </td>
             <td> {{ player.ppr_avg }} </td>

@@ -2,22 +2,100 @@
 
 
     <style>
-
+        h1{
+            text-align: center
+        }
         th {
         text-align: center;
         padding: 10px
         }
         td {
         text-align: center;
+        padding: 5px;
         }
     </style>
 
 
     <h1>{{ team }}</h1>
-    <h1>{{rush_yds}}</h1>
+    <!-- <h1>{{rush_yds}}</h1>
     <h1>{{pass_yds}}</h1>
-    <h1>{{ rush_att }}</h1>
+    <h1></h1>
     <h1>{{ pass_att }}</h1>
+    <h1>{{ rush_pct|floatformat:3 }}</h1> -->
+
+    <h1>Team Offense</h1>
+    <table>
+        <tr>
+            <th>
+                Rush Attempts
+            </th>
+            <th>
+                Rush Yards
+            </th>
+            <th>
+                Rush Touchdowns
+            </th>
+            <th>
+                Yards Per Rush
+            </th>
+            <th>
+                Pass Attempts
+            </th>
+            <th>
+                Completions
+            </th>
+            <th>
+                Pass Yards
+            </th>
+            <th>
+                Pass Touchdowns
+            </th>
+            <th>
+                Net Yards Per Passing Attempt
+            </th>
+            <th>
+                Rush Percentage
+            </th>
+            <th>
+                Pass Percentage
+            </th>
+        </tr>
+        <tr>
+            <td>
+                {{ rush_att }}
+            </td>
+            <td>
+                {{ rush_yds }}
+            </td>
+            <td>
+                {{ rush_td }}
+            </td>
+            <td>
+                {{ rush_yds_per_att }}
+            </td>
+            <td>
+                {{ pass_att }}
+            </td>
+            <td>
+                {{ completions }}
+            </td>
+            <td>
+                {{ pass_yds }}
+            </td>
+            <td>
+                {{ pass_td }}
+            </td>
+            <td>
+                {{ pass_net_yds_per_att }}
+            </td>
+            <td>
+                {{ rush_pct|floatformat:3 }}
+            </td>
+            <td>
+                {{ pass_pct|floatformat:3 }}
+            </td>
+        </tr>
+    </table>
 
 
 
@@ -169,7 +247,7 @@
         {{ player.position }}
     </p>
     {% endfor %} -->
-    <h1>Depth Chart</h1>
+    <h1>2023 Depth Chart</h1>
     <table>
         <tr>
             <th>
@@ -202,11 +280,12 @@
         {% for player in value %}
         <td>
             {{player.name}} </br>
-            {{player.string}} </br>
-            {{player.position}} </br>
+            {{player.string}} - {{player.position}} </br>
         </td>
+        
         {% endfor %}
     </tr>
+
     {% endfor %}
 </table>
 </html>
