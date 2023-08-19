@@ -46,30 +46,57 @@ def home(request):
 
         passing_data = PlayerPassing.objects.filter(player=player_projection.player, year__gte=2020, year__lte=2022).aggregate(
             seasons=Count("year"),
-            yards_per_game=Sum("pass_yds")/Sum("g"),
-            td_per_game=Sum("pass_td")/Sum("g"),
+            # yards_per_game=Sum("pass_yds")/Sum("g"),
+            # td_per_game=Sum("pass_td")/Sum("g"),
+            attempts=Sum("pass_att"),
+            completions=Sum("pass_cmp"),
             yards=Sum("pass_yds"),
+            interceptions=Sum("pass_int"),
             g=Sum("g"),
             tds=Sum("pass_td"),
             points=( Sum("pass_yds") / 25 ) + (Sum("pass_td") * 6)
         )
+        if passing_data['g']:
+            pass_att_per_game = passing_data['attempts'] / passing_data['g']
+            pass_cmp_per_game = passing_data['completions'] / passing_data['g']
+            pass_yds_per_game = passing_data['yards'] / passing_data['g']
+            pass_td_per_game = passing_data['tds'] / passing_data['g']
+            int_per_game = passing_data['interceptions'] / passing_data['g']
+        else:
+            pass_att_per_game = 0
+            pass_cmp_per_game = 0
+            pass_yds_per_game = 0
+            pass_td_per_game = 0
+            int_per_game = 0
 
         rushing_data = PlayerRushing.objects.filter(player=player_projection.player, year__gte=2020, year__lte=2022).aggregate(
             seasons=Count("year"),
-            yards_per_game=Sum("rush_yds")/Sum("g"),
-            td_per_game=Sum("rush_td")/Sum("g"),
-            yards_per_carry=Sum("rush_yds")/Sum("rush_att"),
+            # yards_per_carry=Sum("rush_yds")/Sum("rush_att"),
             attempts=Sum("rush_att"),
             yards=Sum("rush_yds"),
             tds=Sum("rush_td"),
             g=Sum("g"),
             points=( Sum("rush_yds") / 10 ) + (Sum("rush_td") * 6)
         )
+
+        if rushing_data['g']:
+            rush_att_per_game = rushing_data['attempts'] / rushing_data['g']
+            rush_yds_per_game = rushing_data['yards'] / rushing_data['g']
+            rush_td_per_game = rushing_data['tds'] / rushing_data['g']
+        else:
+            rush_att_per_game = 0
+            rush_yds_per_game = 0
+            rush_td_per_game = 0
+
+        if rushing_data['attempts']:
+            yards_per_carry = rushing_data['yards'] / rushing_data['attempts']
+        else:
+            yards_per_carry = 0
+
+
         receiving_data = PlayerReceiving.objects.filter(player=player_projection.player, year__gte=2020, year__lte=2022).aggregate(
             seasons=Count("year"),
-            yards_per_game=Sum("rec_yds")/Sum("g"),
-            td_per_game=Sum("rec_td")/Sum("g"),
-            yards_per_reception=Sum("rec_yds")/Sum("rec"),
+            # yards_per_reception=Sum("rec_yds")/Sum("rec"),
             targets=Sum("targets"),
             receptions=Sum("rec"),
             yards=Sum("rec_yds"),
@@ -80,6 +107,23 @@ def home(request):
             # points_per_g=(( Sum("rec_yds") / 10 ) + (Sum("rec_td") * 6)) / (Sum("g")),
             # points_per_g_ppr=(( Sum("rec_yds") / 10 ) + (Sum("rec_td") * 6) + (Sum("rec"))) / (Sum("g"))
         )
+
+        if receiving_data['g']:
+            rec_tgt_per_game = receiving_data['targets'] / receiving_data['g']
+            rec_rec_per_game = receiving_data['receptions'] / receiving_data['g']
+            rec_yds_per_game = receiving_data['yards'] / receiving_data['g']
+            rec_td_per_game = receiving_data['tds'] / receiving_data['g']
+        else:
+            rec_tgt_per_game = 0
+            rec_rec_per_game = 0
+            rec_yds_per_game = 0
+            rec_td_per_game = 0
+        
+        if receiving_data['receptions']:
+            yards_per_catch = receiving_data['yards'] / receiving_data['receptions']
+        else:
+            yards_per_catch = 0
+
         kicking_data = PlayerKicking.objects.filter(player=player_projection.player, year__gte=2020, year__lte=2022).aggregate(
             seasons=Count("year"),
             fga=Sum("fga"),
@@ -176,9 +220,6 @@ def home(request):
             points_per_touch_ppr = None
             points_per_touch_standard = None
             touches = None
-            print(player_projection.player.name)
-            print(rushing_data)
-            print(receiving_data)
         else:
             touches = 0
             if rushing_data['attempts']:
@@ -204,22 +245,6 @@ def home(request):
             points_per_touch_ppr = round((rec_pts_ppr + rush_pts) / touches, 2)
             points_per_touch_standard = round((rec_pts + rush_pts) / touches, 2)
 
-
-
-        
-        # print(player_projection.player.name)
-        # print(rushing_data['yards_per_game'])
-        # try:
-        #     ppr_avg = round((rushing_data['points'] + receiving_data['points_ppr']) / rushing_data['seasons'])
-        # except Exception as e:
-        #     print(e)
-        #     print(rushing_data)
-        #     print(receiving_data)
-        #     ppr_avg=0
-        # try:
-        #     standard_avg = round((rushing_data['points'] + receiving_data['points']) / rushing_data['seasons'])
-        # except:
-        #     standard_avg=0
 
         if player_projection.player.team:
             team_name = player_projection.player.team.short_name
@@ -261,15 +286,29 @@ def home(request):
             "position_url": position_url,
             # "roster_spot": roster_spot,
             "string": string,
-            "rush_yds_per_g": rushing_data['yards_per_game'],
-            "rec_yds_per_g": receiving_data['yards_per_game'],
             "ppr_avg": ppr_avg,
             "standard_avg": standard_avg,
             "ppg_ppr": ppg_ppr,
             "ppg_standard": ppg_standard,
             "points_per_touch_ppr": points_per_touch_ppr,
             "points_per_touch_standard": points_per_touch_standard,
-            "index": index
+            "ppr_rank": index,
+            "pass_att_per_g": pass_att_per_game,
+            "pass_cmp_per_g": pass_cmp_per_game,
+            "pass_yds_per_g": pass_yds_per_game,
+            "pass_td_per_g": pass_td_per_game,
+            "int_per_g": int_per_game,
+            "rush_att_per_g": rush_att_per_game,
+            "rush_yds_per_g": rush_yds_per_game,
+            "rush_td_per_g": rush_td_per_game,
+            "yards_per_carry": yards_per_carry,
+            "rec_tgt_per_g": rec_tgt_per_game,
+            "rec_rec_per_g": rec_rec_per_game,
+            "rec_yds_per_g": rec_yds_per_game,
+            "rec_td_per_g": rec_td_per_game,
+            "yards_per_catch": yards_per_catch
+
+
         }
         if not position_param or position == position_param:
             players += [new_player]

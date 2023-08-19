@@ -33,7 +33,7 @@
     <table class="sortable">
         <thead>
         <tr class="header">
-            <th>id</th>
+            <th>PPR Rank</th>
             <th>
                 Player
             </th>
@@ -77,17 +77,51 @@
                 Rush Yds Per G </br> (2020-2022)
             </th>
             <th>
-                Rec Yds Per G </br> (2020-2022)
+                Rec Yds Per G  (2020-2022)
             </th>
-
             <th>
-            Attempts per game
-            Completions per game
-            Pass Yds per game
-            Pass TDs per game
-            Interceptions per game
-            Fumbles per game
-
+                Pass Attempts / Game
+            </th>
+            <th>
+                Completions per game
+            </th>
+            <th>
+                Pass Yds per game
+            </th>
+            <th>
+                Pass TDs per game
+            </th>
+            <th>
+                Interceptions per game
+            </th>
+            <th>
+                Rush Att / G
+            </th>
+            <th>
+                Rush Yds / G
+            </th>
+            <th>
+                Rush TD / G
+            </th>
+            <th>
+                Yards per Carry
+            </th>
+            <th>
+                Targets / G
+            </th>
+            <th>
+                Receptions / G
+            </th>
+            <th>
+                Rec Yds / G
+            </th>
+            <th>
+                Rec TD / G
+            </th>
+            <th>
+                Yards Per Catch
+            </th>
+            <!-- <th>
             Rush Att per game
             Rush Yds per game
             Rush TDs per game
@@ -101,13 +135,13 @@
 
             FGA 
             FGM
-            </th>
+            </th> -->
         </tr>
     </thead>
 
         {% for player in fantasy %}
         <tr>
-            <td>  {{ player.index }} </td>
+            <td>  {{ player.ppr_rank }} </td>
             <td> 
                 {{player.name}}
              </td>
@@ -129,8 +163,22 @@
             <td> {{ player.ppg_standard }} </td>
             <td> {{ player.points_per_touch_ppr }} </td>
             <td> {{ player.points_per_touch_standard }} </td>
-            <td> {{ player.rush_yds_per_g}} </td>
-            <td> {{ player.rec_yds_per_g}} </td>
+            <td> {{ player.rush_yds_per_g }} </td>
+            <td> {{ player.rec_yds_per_g }} </td>
+            <td> {{ player.pass_att_per_g|floatformat:2 }} </td>
+            <td> {{ player.pass_cmp_per_g|floatformat:2 }} </td>
+            <td> {{ player.pass_yds_per_g|floatformat:2 }} </td>
+            <td> {{ player.pass_td_per_g|floatformat:2 }} </td>
+            <td> {{ player.int_per_g|floatformat:2 }} </td>
+            <td> {{ player.rush_att_per_g|floatformat:2 }} </td>
+            <td> {{ player.rush_yds_per_g|floatformat:2 }} </td>
+            <td> {{ player.rush_td_per_g|floatformat:2 }} </td>
+            <td> {{ player.yards_per_carry|floatformat:2 }} </td>
+            <td> {{ player.rec_tgt_per_g|floatformat:2 }} </td>
+            <td> {{ player.rec_rec_per_g|floatformat:2 }} </td>
+            <td> {{ player.rec_yds_per_g|floatformat:2 }} </td>
+            <td> {{ player.rec_td_per_g|floatformat:2 }} </td>
+            <td> {{ player.yards_per_catch|floatformat:2 }} </td>
         </tr>
         {% endfor %}
     </table>
