@@ -141,7 +141,7 @@ def home(request):
             xpa=Sum("xpa"),
             xpm=Sum("xpm"),
             g=Sum("g"),
-            points=((Sum("fgm1") * 3) - (Sum("fga1") - Sum("fgm1"))) + ((Sum("fgm2") * 3) - (Sum("fga2") - Sum("fgm2"))) + ((Sum("fgm3") * 3) - (Sum("fga3") - Sum("fgm3"))) + ((Sum("fgm4") * 4) - (Sum("fga4") - Sum("fgm4"))) + ((Sum("fgm5") * 5) - (Sum("fga5") - Sum("fgm5"))) + (Sum("xpm") - (Sum("xpa") - Sum("xpm")))
+            points=((Sum(F("fgm1")) * 3) - (Sum(F("fga1")) - Sum(F("fgm1")))) + ((Sum(F("fgm2")) * 3) - (Sum(F("fga2")) - Sum(F("fgm2")))) + ((Sum(F("fgm3")) * 3) - (Sum(F("fga3")) - Sum(F("fgm3")))) + ((Sum(F("fgm4")) * 4) - (Sum(F("fga4")) - Sum(F("fgm4")))) + ((Sum(F("fgm5")) * 5) - (Sum(F("fga5")) - Sum(F("fgm5")))) + (Sum(F("xpm")) - (Sum(F("xpa")) - Sum(F("xpm"))))
             # points=( Sum("rec_yds") / 10 ) + (Sum("rec_td") * 6),
             # points_ppr=( Sum("rec_yds") / 10 ) + (Sum("rec_td") * 6) + (Sum("rec"))
         )
