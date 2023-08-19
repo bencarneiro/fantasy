@@ -62,3 +62,17 @@ class Command(BaseCommand):
         dc_4.save()
         j_moody.team=sf
         j_moody.save()
+
+
+        pats = Team.objects.get(name="New England Patriots")
+        c_ryland = Player.objects.get(name="Chad Ryland")
+        dc_5 = DepthChart(
+            player=c_ryland,
+            team=pats,
+            roster_spot=13,
+            position=kicker,
+            string=1
+        )
+        dc_5.save()
+        c_ryland.team=pats
+        c_ryland.save()
