@@ -9,7 +9,7 @@ from django.db.models.functions import Round
 from django.views import View
 from django.views.decorators.csrf import csrf_exempt
 from django.http import JsonResponse
-from football.models import InjuryStatus, DepthChart, PlayerPassing, PlayerProjections, DepthChart, PlayerKicking, PlayerRushing, PlayerReceiving, PlayerReturning, Team, TeamOffense, TeamDefense, PlayerPassingByTeam, PlayerScrimmageByTeam
+from football.models import InjuryStatus, DepthChart, PlayerPassing, PlayerProjections, DepthChart, PlayerKicking, PlayerRushing, PlayerReceiving, PlayerReturning, Team, TeamOffense, TeamDefense, PlayerPassingByTeam, PlayerScrimmageByTeam, DefensivePoints
 
 @csrf_exempt
 def depth_chart(request):
@@ -266,6 +266,15 @@ def home(request):
             team_name = player_projection.player.name.split(" ")[0]
             # roster_spot = 1
             string = 1
+            def_pts = DefensivePoints.objects.get(year=2022,team_id__short_name=team_name)
+            ppr_avg = def_pts.points
+            standard_avg = def_pts.points
+            if team_name in ['Bills', 'Bengals']:
+                ppg_ppr = round(def_pts.points / 16, 1)
+                ppg_standard = round(def_pts.points / 16, 1)
+            else:
+                ppg_ppr = round(def_pts.points / 17, 1)
+                ppg_standard = round(def_pts.points / 17, 1)
             # defense_team = Team.objects.get(short_name=player_projection.player.name.split(" ")[0])
             # team_defense = TeamDefense.objects.filter(team=defense_team, year__lte=2022, year__gte=2020).aggregate(
             #     g=Sum("games_played"),

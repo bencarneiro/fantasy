@@ -418,3 +418,14 @@ class PlayerProjections(models.Model):
     class Meta:
         managed = True
         db_table = "player_projection"
+
+
+class DefensivePoints(models.Model):
+
+    team = models.ForeignKey(Team, on_delete=models.DO_NOTHING)
+    year = models.SmallIntegerField(null=False)
+    points = models.SmallIntegerField(null=False)
+
+    class Meta:
+        managed = True
+        db_table = "defensive_points"
