@@ -9,7 +9,7 @@ from django.db.models.functions import Round
 from django.views import View
 from django.views.decorators.csrf import csrf_exempt
 from django.http import JsonResponse
-from football.models import DepthChart, PlayerPassing, PlayerProjections, DepthChart, PlayerKicking, PlayerRushing, PlayerReceiving, PlayerReturning, Team, TeamOffense, TeamDefense, PlayerPassingByTeam, PlayerScrimmageByTeam
+from football.models import InjuryStatus, DepthChart, PlayerPassing, PlayerProjections, DepthChart, PlayerKicking, PlayerRushing, PlayerReceiving, PlayerReturning, Team, TeamOffense, TeamDefense, PlayerPassingByTeam, PlayerScrimmageByTeam
 
 @csrf_exempt
 def depth_chart(request):
@@ -146,6 +146,8 @@ def home(request):
             # points_ppr=( Sum("rec_yds") / 10 ) + (Sum("rec_td") * 6) + (Sum("rec"))
         )
 
+        
+
         if not passing_data['seasons'] and not rushing_data['seasons'] and not receiving_data['seasons'] and not kicking_data['seasons']:
             ppr_avg = None
             standard_avg = None
@@ -264,6 +266,16 @@ def home(request):
             team_name = player_projection.player.name.split(" ")[0]
             # roster_spot = 1
             string = 1
+            # defense_team = Team.objects.get(short_name=player_projection.player.name.split(" ")[0])
+            # team_defense = TeamDefense.objects.filter(team=defense_team, year__lte=2022, year__gte=2020).aggregate(
+            #     g=Sum("games_played"),
+            #     points=Sum("points"),
+            #     turnovers=Sum("turnovers")
+            # )
+            # points_allowed_per_game = team_defense['points'] / team_defense['g']
+            # turnovers_per_game = team_defense['turnovers'] / team_defense['g']
+            # print(points_allowed_per_game)
+            # print(turnovers_per_game)
         else:
             pk = PlayerKicking.objects.filter(player_id=player_projection.player.id)
             if len(pk) > 0:
@@ -275,8 +287,15 @@ def home(request):
                 # roster_spot = "N/A"
                 string = "N/A"
         position_url = "?position=" + position
+        try:
+            injury = InjuryStatus.objects.get(player=player_projection.player)
+            injury_status=injury.status
+        except:
+            injury_status = ""
+            
         new_player = {
             "name": player_projection.player.name,
+            "injury_status": injury_status,
             "espn_link": espn_link,
             "team": team_name,
             "team_url": team_url,

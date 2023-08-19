@@ -1,5 +1,8 @@
 <html>
     <style>
+        p{
+            text-align: center;
+        }
         h1 {
             text-align: center;
         }
@@ -25,7 +28,8 @@
         }
     </style>
 
-    <h1>Draft Buddy</h1>
+    <h1>draft.support</h1>
+    <p>Historical Data is based on 2020-2022 Seasons</p>
 
 
 
@@ -37,6 +41,7 @@
             <th>
                 Player
             </th>
+            <th>Injury Status</th>
             <th>
                 Links
             </th>
@@ -50,71 +55,72 @@
                 Team
             </th>
             <th>
-                PPR Projection </br> (2023)
+                Projected Points (PPR)
             </th>
             <th>
-                Standard Projection </br> (2023)
+                Projected Points (Standard)
             </th>
             <th>
-                PPR Average </br> (2020-2022)
+                Points/Season (PPR)
             </th>
             <th>
-                STANDARD Average </br> (2020-2022)
+                Points/Season (Standard)
             </th>
             <th>
-                Points Per Game (PPR)</br> (2020-2022)
+                Points/Game (PPR)
             </th>
             <th>
-                Points Per Game (Standard)</br> (2020-2022)
+                Points/Game (Standard)
             </th>
             <th>
-                PPR Points Per Touch </br> (2020-2022)
+                Points/Touch (PPR)
             </th>
             <th>
-                STANDARD Points Per Touch </br> (2020-2022)
+                Points/Touch (Standard)
             </th>
             <th>
-                Pass Attempts / Game
+                Pass_Att/G
             </th>
             <th>
-                Completions per game
+                Pass_Cmp/G
             </th>
             <th>
-                Pass Yds per game
+                Pass_Yds/G
             </th>
             <th>
-                Pass TDs per game
+                Pass_TD/G
             </th>
             <th>
-                Interceptions per game
+                Int/G
             </th>
             <th>
-                Rush Att / G
+                Rush_Att/G
             </th>
             <th>
-                Rush Yds / G
+                Rush_Yds/G
             </th>
             <th>
-                Rush TD / G
+                Rush_TD/G
             </th>
             <th>
-                Yards per Carry
+                Yards/Carry
             </th>
             <th>
-                Targets / G
+                Targets/G
             </th>
             <th>
-                Receptions / G
+                Receptions/G
             </th>
             <th>
-                Rec Yds / G
+                Rec Yds/G
             </th>
             <th>
-                Rec TD / G
+                Rec TD/G
             </th>
             <th>
-                Yards Per Catch
+                Yards/Catch
             </th>
+            
             <!-- <th>
             Rush Att per game
             Rush Yds per game
@@ -139,6 +145,7 @@
             <td> 
                 {{player.name}}
              </td>
+             <td> {{player.injury_status}}</td>
              <td>
                 <a href={{ player.espn_link }} target="_blank"> ESPN </a> 
              </td>
