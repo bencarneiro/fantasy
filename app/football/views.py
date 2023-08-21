@@ -366,7 +366,6 @@ def team_page(request):
                     "position": entry.position.name,
                     "string": entry.string
                 }]
-        print(dc)
             # dc += [{
             #     "name": entry.player.name,
             #     "position": entry.position.name,
@@ -441,3 +440,7 @@ def team_page(request):
             "pass_net_yds_per_att_d": team_defense['pass_net_yds_per_att']
         }
         return render(request, "team.html", context=context)
+
+@csrf_exempt
+def donate(request):
+    return render(request, "donate.html")
