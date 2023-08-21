@@ -43,8 +43,7 @@ INSTALLED_APPS = [
 
 CACHES = {
     "default": {
-        "BACKEND": "django.core.cache.backends.locmem.LocMemCache",
-        "LOCATION": "fantasy-cache",
+        "BACKEND": "django.core.cache.backends.locmem.LocMemCache"
     }
 }
 
@@ -61,7 +60,6 @@ MIDDLEWARE = [
     "django.middleware.cache.FetchFromCacheMiddleware",
 ]
 
-CACHE_MIDDLEWARE_ALIAS="fantasy-cache"
 CACHE_MIDDLEWARE_SECONDS=86400
 CACHE_MIDDLEWARE_KEY_PREFIX=""
 
