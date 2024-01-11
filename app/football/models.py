@@ -429,3 +429,12 @@ class DefensivePoints(models.Model):
     class Meta:
         managed = True
         db_table = "defensive_points"
+
+
+class PinnacleData(models.Model):
+    created = models.DateTimeField(null=False, blank=False)
+    data = models.JSONField(null=False, blank=False)
+
+    class Meta:
+        managed = True
+        db_table = "pinnacle_data"
