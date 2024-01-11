@@ -65,7 +65,8 @@ class Command(BaseCommand):
         all_links = []
         games = []
 
-        driver = webdriver.Chrome(service=Service(ChromeDriverManager(driver_version="2.26").install()), options=options)
+        # driver = webdriver.Chrome(service=Service(ChromeDriverManager(driver_version="2.26").install()), options=options)
+        driver = webdriver.Chrome()
         driver.implicitly_wait(15)
         driver.get('https://www.pinnacle.com/en/football/matchups/')
 
