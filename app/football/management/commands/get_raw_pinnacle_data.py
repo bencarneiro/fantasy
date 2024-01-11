@@ -4,20 +4,25 @@ from django.core.management.base import BaseCommand
 import datetime
 from football.models import PinnacleData
 
+# from webdriver_manager.chrome import ChromeDriverManager
+
+# from selenium import webdriver
+# from selenium.webdriver.chrome.options import Options
+# from selenium.webdriver.chrome.service import Service
+# from webdriver_manager.chrome import ChromeDriverManager
+ 
+
+import chromedriver_autoinstaller
+chromedriver_autoinstaller.install()  # Check if the current version of chromedriver exists
+                                      # and if it doesn't exist, download it automatically,
+        
 from selenium import webdriver
 from selenium.webdriver.common.by import By
 
-from webdriver_manager.chrome import ChromeDriverManager
-
-from selenium import webdriver
-from selenium.webdriver.chrome.options import Options
-from selenium.webdriver.chrome.service import Service
-# from webdriver_manager.chrome import ChromeDriverManager
- 
-options = Options()
-options.add_argument('--headless')
-options.add_argument('--no-sandbox')
-options.add_argument('--disable-dev-shm-usage')
+# options = Options()
+# options.add_argument('--headless')
+# options.add_argument('--no-sandbox')
+# options.add_argument('--disable-dev-shm-usage')
 
 
 def get_betting_data(link, driver):
