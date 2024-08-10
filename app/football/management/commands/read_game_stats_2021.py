@@ -40,7 +40,7 @@ class Command(BaseCommand):
                     continue
                 slug = player.split('"')[0]
                 link = player.split('a href="')[1].split('">')[0]
-                name = player.split('.htm">')[1].split(game_id"<")[0]
+                name = player.split('.htm">')[1].split("<")[0]
                 team = player.split('data-stat="team" >')[1].split('<')[0]
                 if 'data-stat="pass_cmp' not in player:
                     break
