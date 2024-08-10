@@ -21,7 +21,7 @@ class Command(BaseCommand):
             print(box_score_link)
             game = requests.get(box_score_link)
             start_time = game.text.split("Start Time</strong>: ")[1].split("</div>")[0]
-            if "pm" in start_time:
+            if "pm" in start_time and "12:" not in start_time:
                 hour = int(start_time.split(":")[0]) + 12
             else:
                 hour = int(start_time.split(":")[0])
