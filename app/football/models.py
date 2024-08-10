@@ -432,9 +432,63 @@ class DefensivePoints(models.Model):
 
 
 class PinnacleData(models.Model):
+    
     created = models.DateTimeField(null=False, blank=False)
     data = models.JSONField(null=False, blank=False)
 
     class Meta:
         managed = True
         db_table = "pinnacle_data"
+
+
+
+class PlayerFBR(models.Model):
+    id = models.CharField(primary_key=True, max_length=16)
+    name = models.CharField(max_length=256, null=False, blank=False)
+    url = models.CharField(max_length=256, null=False, blank=False)
+
+    class Meta:
+        db_table = "player_fbr"
+        managed = True
+
+
+class TeamFBR(models.Model):
+    id = models.CharField(primary_key=True, max_length=16)
+    name = models.CharField(max_length=256, null=False, blank=False)
+    short_name = models.CharField(max_length=256, null=False, blank=False)
+
+    class Meta:
+        db_table = "team_fbr"
+        managed = True
+
+
+
+class GameStats(models.Model):
+
+    player = models.ForeignKey(PlayerFBR, on_delete = models.DO_NOTHING)
+    team = models.ForeignKey(TeamFBR, on_delete = models.DO_NOTHING)
+
+    passing_completions = models.IntegerField(null=False, blank=False, default=0)
+    passing_attempts = models.IntegerField(null=False, blank=False, default=0)
+    passing_yards = models.IntegerField(null=False, blank=False, default=0)
+    passing_tds = models.IntegerField(null=False, blank=False, default=0)
+    interceptions = models.IntegerField(null=False, blank=False, default=0)
+    sacks = models.IntegerField(null=False, blank=False, default=0)
+    sack_yards = models.IntegerField(null=False, blank=False, default=0)
+    passing_long = models.IntegerField(null=False, blank=False, default=0)
+    passer_rating = models.FloatField(null=True, blank=True)
+    rushing_attempts = models.IntegerField(null=False, blank=False, default=0)
+    rushing_yards = models.IntegerField(null=False, blank=False, default=0)
+    rushing_tds = models.IntegerField(null=False, blank=False, default=0)
+    rushing_long = models.IntegerField(null=False, blank=False, default=0)
+    targets = models.IntegerField(null=False, blank=False, default=0)
+    receptions = models.IntegerField(null=False, blank=False, default=0)
+    receiving_yards = models.IntegerField(null=False, blank=False, default=0)
+    receiving_tds = models.IntegerField(null=False, blank=False, default=0)
+    receiving_long = models.IntegerField(null=False, blank=False, default=0)
+    fumbles = models.IntegerField(null=False, blank=False, default=0)
+    fumbles_lost = models.IntegerField(null=False, blank=False, default=0)
+
+    class Meta:
+        db_table = "game_stats"
+        managed = True
