@@ -3,21 +3,36 @@ from django.core.management.base import BaseCommand
 import requests
 from football.models import PlayerFBR, TeamFBR, GameStats
 from time import sleep
+from datetime import datetime
 
 
 class Command(BaseCommand):
 
     def handle(self, *args, **kwargs):
-        GameStats.objects.all().delete()
-        r = requests.get("https://www.pro-football-reference.com/years/2023/games.htm")
+        GameStats.objects.filter(dt__gte="2021-07-01",dt__lte="2022-07-01").delete()
+        r = requests.get("https://www.pro-football-reference.com/years/2021/games.htm")
         sleep(6)
         box_score_links = []
         z = r.text.split('",\n\t\t\t"url": "')
         for y in z[1:]:
             box_score_links += [y.split('",\n\t\t"eventStatus": "')[0]]
         for box_score_link in box_score_links:
+            game_id = box_score_link.split("/boxscores/")[1].split(".htm")[0]
             print(box_score_link)
             game = requests.get(box_score_link)
+            start_time = game.text.split("Start Time</strong>: ")[1].split("</div>")[0]
+            if "pm" in start_time:
+                hour = int(start_time.split(":")[0]) + 12
+            else:
+                hour = int(start_time.split(":")[0])
+            dt = datetime.datetime(
+                year=game_id[:4],
+                month=game_id[4:6],
+                day=game_id[6:8],
+                hour=hour,
+                minute=start_time.split(":")[1][:2]
+            )
+            print(start_time)
             sleep(6)
             players = game.text.split('data-stat="fumbles_lost" scope="col" class=" poptip center" data-tip="Fumbles Lost by Player (since 1994) or Team" data-over-header="Fumbles" >FL</th>\n      </tr>\n      </thead>\n<tbody><tr ><th scope="row" class="left " data-append-csv="')[1]
             for player in players.split('data-append-csv="'):
@@ -25,7 +40,7 @@ class Command(BaseCommand):
                     continue
                 slug = player.split('"')[0]
                 link = player.split('a href="')[1].split('">')[0]
-                name = player.split('.htm">')[1].split("<")[0]
+                name = player.split('.htm">')[1].split(game_id"<")[0]
                 team = player.split('data-stat="team" >')[1].split('<')[0]
                 if 'data-stat="pass_cmp' not in player:
                     break
@@ -67,6 +82,8 @@ class Command(BaseCommand):
                     team.save()
 
                 new_game = GameStats(
+                    id=game_id,
+                    dt=dt,
                     team=team,
                     player=player,
                     passing_completions=passing_completions,
