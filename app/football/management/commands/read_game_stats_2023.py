@@ -1,7 +1,7 @@
 from django.core.management.base import BaseCommand
 # import pandas as pd
 import requests
-from football.models import PlayerFBR, TeamFBR, GameStats
+from football.models import PlayerFBR, TeamFBR, GameFBR, GameStats
 from time import sleep
 from datetime import datetime
 
@@ -9,7 +9,7 @@ from datetime import datetime
 class Command(BaseCommand):
 
     def handle(self, *args, **kwargs):
-        GameStats.objects.filter(dt__gte="2023-07-01",dt__lte="2024-07-01").delete()
+        GameStats.objects.filter(game__dt__gte="2023-07-01",game__dt__lte="2024-07-01").delete()
         r = requests.get("https://www.pro-football-reference.com/years/2023/games.htm")
         sleep(6)
         box_score_links = []
@@ -25,13 +25,18 @@ class Command(BaseCommand):
                 hour = int(start_time.split(":")[0]) + 12
             else:
                 hour = int(start_time.split(":")[0])
-            dt = datetime.datetime(
-                year=game_id[:4],
-                month=game_id[4:6],
-                day=game_id[6:8],
+            dt = datetime(
+                year=int(game_id[:4]),
+                month=int(game_id[4:6]),
+                day=int(game_id[6:8]),
                 hour=hour,
-                minute=start_time.split(":")[1][:2]
+                minute=int(start_time.split(":")[1][:2])
             )
+            new_game = GameFBR(
+                id=game_id,
+                dt=dt
+            )
+            new_game.save()
             print(start_time)
             sleep(6)
             players = game.text.split('data-stat="fumbles_lost" scope="col" class=" poptip center" data-tip="Fumbles Lost by Player (since 1994) or Team" data-over-header="Fumbles" >FL</th>\n      </tr>\n      </thead>\n<tbody><tr ><th scope="row" class="left " data-append-csv="')[1]
@@ -82,8 +87,7 @@ class Command(BaseCommand):
                     team.save()
 
                 new_game = GameStats(
-                    id=game_id,
-                    dt=dt,
+                    game=new_game,
                     team=team,
                     player=player,
                     passing_completions=passing_completions,

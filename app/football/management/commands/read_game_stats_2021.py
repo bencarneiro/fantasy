@@ -25,12 +25,12 @@ class Command(BaseCommand):
                 hour = int(start_time.split(":")[0]) + 12
             else:
                 hour = int(start_time.split(":")[0])
-            dt = datetime.datetime(
-                year=game_id[:4],
-                month=game_id[4:6],
-                day=game_id[6:8],
+            dt = datetime(
+                year=int(game_id[:4]),
+                month=int(game_id[4:6]),
+                day=int(game_id[6:8]),
                 hour=hour,
-                minute=start_time.split(":")[1][:2]
+                minute=int(start_time.split(":")[1][:2])
             )
             print(start_time)
             sleep(6)

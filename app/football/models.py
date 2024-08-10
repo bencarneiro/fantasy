@@ -462,14 +462,23 @@ class TeamFBR(models.Model):
         managed = True
 
 
+class GameFBR(models.Model):
+
+    id = models.CharField(primary_key=True, max_length=64)
+    dt = models.DateTimeField(null=False, blank=False)
+
+    class Meta:
+        db_table = "game_fbr"
+        managed = True
+
+
 
 class GameStats(models.Model):
 
-    id = models.CharField(primary_key=True, max_length=64)
 
     player = models.ForeignKey(PlayerFBR, on_delete = models.DO_NOTHING)
     team = models.ForeignKey(TeamFBR, on_delete = models.DO_NOTHING)
-    dt = models.DateTimeField(null=False, blank=False)
+    game = models.ForeignKey(GameFBR, on_delete = models.DO_NOTHING)
 
     passing_completions = models.IntegerField(null=False, blank=False, default=0)
     passing_attempts = models.IntegerField(null=False, blank=False, default=0)
