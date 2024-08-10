@@ -1,7 +1,7 @@
 from django.core.management.base import BaseCommand
 # import pandas as pd
 import requests
-from football.models import PlayerFBR, TeamFBR, GameStats
+from football.models import PlayerFBR, TeamFBR, GameFBR, GameStats
 from time import sleep
 from datetime import datetime
 
@@ -9,7 +9,7 @@ from datetime import datetime
 class Command(BaseCommand):
 
     def handle(self, *args, **kwargs):
-        GameStats.objects.filter(dt__gte="2020-07-01",dt__lte="2021-07-01").delete()
+        GameStats.objects.filter(game__dt__gte="2020-07-01",game__dt__lte="2021-07-01").delete()
         r = requests.get("https://www.pro-football-reference.com/years/2020/games.htm")
         sleep(6)
         box_score_links = []
@@ -32,6 +32,11 @@ class Command(BaseCommand):
                 hour=hour,
                 minute=int(start_time.split(":")[1][:2])
             )
+            new_game = GameFBR(
+                id=game_id,
+                dt=dt
+            )
+            new_game.save()
             print(start_time)
             sleep(6)
             players = game.text.split('data-stat="fumbles_lost" scope="col" class=" poptip center" data-tip="Fumbles Lost by Player (since 1994) or Team" data-over-header="Fumbles" >FL</th>\n      </tr>\n      </thead>\n<tbody><tr ><th scope="row" class="left " data-append-csv="')[1]
@@ -81,9 +86,8 @@ class Command(BaseCommand):
                     team = TeamFBR(id=team, name=team, short_name=team)
                     team.save()
 
-                new_game = GameStats(
-                    id=game_id,
-                    dt=dt,
+                new_game_stats = GameStats(
+                    game=new_game,
                     team=team,
                     player=player,
                     passing_completions=passing_completions,
@@ -110,6 +114,6 @@ class Command(BaseCommand):
                     fumbles = fumbles,
                     fumbles_lost = fumbles_lost
                 )
-                new_game.save()
+                new_game_stats.save()
                 print(f"SAVED {player.id} on {team.id}")
             

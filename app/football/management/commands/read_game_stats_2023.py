@@ -86,7 +86,7 @@ class Command(BaseCommand):
                     team = TeamFBR(id=team, name=team, short_name=team)
                     team.save()
 
-                new_game = GameStats(
+                new_game_stats = GameStats(
                     game=new_game,
                     team=team,
                     player=player,
@@ -114,6 +114,6 @@ class Command(BaseCommand):
                     fumbles = fumbles,
                     fumbles_lost = fumbles_lost
                 )
-                new_game.save()
+                new_game_stats.save()
                 print(f"SAVED {player.id} on {team.id}")
             
