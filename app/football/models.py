@@ -442,23 +442,28 @@ class PinnacleData(models.Model):
 
 
 
-class PlayerFBR(models.Model):
-    id = models.CharField(primary_key=True, max_length=16)
-    name = models.CharField(max_length=256, null=False, blank=False)
-    url = models.CharField(max_length=256, null=False, blank=False)
-
-    class Meta:
-        db_table = "player_fbr"
-        managed = True
-
-
 class TeamFBR(models.Model):
     id = models.CharField(primary_key=True, max_length=16)
     name = models.CharField(max_length=256, null=False, blank=False)
     short_name = models.CharField(max_length=256, null=False, blank=False)
+    fbr_slug = models.CharField(max_length=256, null=True, blank=True)
+    espn_depth_chart = models.CharField(max_length=256, null=True, blank=True)
 
     class Meta:
         db_table = "team_fbr"
+        managed = True
+
+
+class PlayerFBR(models.Model):
+    id = models.CharField(primary_key=True, max_length=16)
+    name = models.CharField(max_length=256, null=False, blank=False)
+    url = models.CharField(max_length=256, null=False, blank=False)
+    position = models.CharField(max_length=16, null=True, blank=True)
+    age = models.IntegerField(null=True, blank=True)
+    team = models.ForeignKey(TeamFBR, on_delete=models.DO_NOTHING, null=True, blank=True)
+
+    class Meta:
+        db_table = "player_fbr"
         managed = True
 
 

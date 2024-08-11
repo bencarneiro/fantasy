@@ -36,10 +36,28 @@
                 player
             </th>
             <th>
+                team
+            </th>
+            <th>
+                games played
+            </th>
+            <th>
+                fantasy_points
+            </th>
+            <th>
+                fantasy_points_per_game
+            </th>
+            <th>
                 rush_yds_per_game
             </th>
             <th>
                 rush_tds_per_game
+            </th>
+            <th>
+                receiving_yds_per_game
+            </th>
+            <th>
+                receiving_tds_per_game
             </th>
             <th>
                 pass_yds_per_game
@@ -54,7 +72,7 @@
                 passing_attempts_per_game
             </th>
             <th>
-                fantasy_points_per_game
+                passing_attempts
             </th>
         </tr>
     </thead>
@@ -64,10 +82,28 @@
             {{ player.player__name }}
         </td>
         <td>
+            {{ player.player__team__id }}
+        </td>
+        <td>
+            {{ player.games_played }}
+        </td>
+        <td>
+            {{ player.fantasy_points }}
+        </td>
+        <td>
+            {{ player.fantasy_points_per_game }}
+        </td>
+        <td>
             {{ player.rushing_yards_per_game }}
         </td>
         <td>
             {{ player.rushing_tds_per_game }}
+        </td>
+        <td>
+            {{ player.receiving_yards_per_game }}
+        </td>
+        <td>
+            {{ player.receiving_tds_per_game }}
         </td>
         <td>
             {{ player.passing_yards_per_game }}
@@ -82,7 +118,7 @@
             {{ player.attempts_per_game }}
         </td>
         <td>
-            {{ player.fantasy_points_per_game }}
+            {{ player.passing_attempts }}
         </td>
     </tr>
     {% endfor %}

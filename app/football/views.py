@@ -450,7 +450,8 @@ def donate(request):
 def getstats(request):
 
     stats = GameStats.objects.filter(
-        game__dt__lte="2021-07-01"
+        # game__dt__lte="2021-07-01"\
+        # passing_attempts__lt=20
     )\
     .values(
         "player__name"
