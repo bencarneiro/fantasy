@@ -33,7 +33,7 @@
         <thead>
         <tr class="header">
             <th>
-                player
+                team
             </th>
             <th>
                 rush_yds_per_game
@@ -58,31 +58,31 @@
             </th>
         </tr>
     </thead>
-    {% for player in stats %}
+    {% for team in stats %}
     <tr>
         <td>
-            {{ player.player__name }}
+            {{ team.team__name }}
         </td>
         <td>
-            {{ player.rushing_yards_per_game }}
+            {{ team.rushing_yards_per_game }}
         </td>
         <td>
-            {{ player.rushing_tds_per_game }}
+            {{ team.rushing_tds_per_game }}
         </td>
         <td>
-            {{ player.passing_yards_per_game }}
+            {{ team.passing_yards_per_game }}
         </td>
         <td>
-            {{ player.passing_tds_per_game }}
+            {{ team.passing_tds_per_game }}
         </td>
         <td>
-            {{ player.carries_per_game }}
+            {{ team.carries_per_game }}
         </td>
         <td>
-            {{ player.attempts_per_game }}
+            {{ team.attempts_per_game }}
         </td>
         <td>
-            {{ player.fantasy_points_per_game }}
+            {{ team.fantasy_points_per_game }}
         </td>
     </tr>
     {% endfor %}

@@ -15,7 +15,7 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
-from football.views import depth_chart, home, team_page, donate,getstats
+from football.views import depth_chart, home, team_page, donate,getstats,teamstats
 
 urlpatterns = [
     path("admin/", admin.site.urls),
@@ -23,5 +23,6 @@ urlpatterns = [
     path("", home, name="home"),
     path("team/", team_page, name="team"),
     path("donate/", donate, name="donate"),
-    path("stats", getstats, name="stats")
+    path("stats", getstats, name="stats"),
+    path("teamstats", teamstats, name="teamstats")
 ]
