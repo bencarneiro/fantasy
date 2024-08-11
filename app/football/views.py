@@ -454,7 +454,8 @@ def getstats(request):
         # passing_attempts__lt=20
     )\
     .values(
-        "player__name"
+        "player__name",
+        "player__team_id"
     )\
     .annotate(
         games_played=Count("*"),
