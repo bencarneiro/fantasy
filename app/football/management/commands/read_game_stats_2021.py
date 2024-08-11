@@ -71,7 +71,7 @@ class Command(BaseCommand):
                 receptions = player.split('data-stat="rec" >')[1].split('<')[0]
                 receiving_yards = player.split('data-stat="rec_yds" >')[1].split('<')[0]
                 receiving_long = player.split('data-stat="rec_long" >')[1].split('<')[0]
-                receiving_tds = player.split('data-stat="rec_tds" >')[1].split('<')[0]
+                receiving_tds = player.split('data-stat="rec_td" >')[1].split('<')[0]
                 fumbles = player.split('data-stat="fumbles" >')[1].split('<')[0]
                 fumbles_lost = player.split('data-stat="fumbles" >')[1].split('<')[0]
 
