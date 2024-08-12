@@ -450,6 +450,7 @@ def donate(request):
 def getstats(request):
     
     stats = GameStats.objects.filter(
+        game__dt__gte="2021-07-01"
     )\
     .values(
         "player__name",
@@ -529,7 +530,8 @@ def position_stats(request):
         # qs = GameStats.objects.filter(player__position=request.GET['pos'])
     
     stats = GameStats.objects.filter(
-        player__position=request.GET['pos']
+        player__position=request.GET['pos'],
+        game__dt__gte="2021-07-01"
     )\
     .values(
         "player__name",
@@ -613,7 +615,8 @@ def teamstats(request):
         # game__dt__lte="2021-07-01"
     )\
     .values(
-        "team__name"
+        "team__id",
+        "team__espn_depth_chart"
     )\
     .annotate(
         games_played=Count("game__id", distinct=True),

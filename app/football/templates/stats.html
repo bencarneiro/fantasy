@@ -4,7 +4,7 @@
     p{
         text-align: center;
     }
-    h1 {
+    h1, h2 {
         text-align: center;
     }
     th {
@@ -29,6 +29,9 @@
 </style>
 
 <script src="https://www.kryogenix.org/code/browser/sorttable/sorttable.js"></script>
+<h1> PLAYER STATS </h1>
+<h2>
+    <a target="_blank" href="/teamstats">See Stats By Team</a></h2>
     <table class="sortable">
         <thead>
         <tr class="header">
@@ -53,7 +56,6 @@
             <th>
                 Rush Attempts / Game
             </th>
-
             <th>
                 Rush Yds / Game
             </th>
@@ -71,6 +73,12 @@
             </th>
             <th>
                 Receiving TDs / Game
+            </th>
+            <th>
+                Touches / Game
+            </th>
+            <th>
+                Fantasy Points / Touch
             </th>
             <th>
                 Pass Attempts / Game
@@ -101,46 +109,53 @@
             {{ player.games_played }}
         </td>
         <td>
-            {{ player.fantasy_points }}
+            {{ player.fantasy_points|floatformat:1 }}
         </td>
         <td>
-            {{ player.fantasy_points_per_game }}
+            {{ player.fantasy_points_per_game|floatformat:1 }}
         </td>
         <td>
-            {{ player.rushing_attempts_per_game }}
+            {{ player.rushing_attempts_per_game|floatformat:1 }}
         </td>
         <td>
-            {{ player.rushing_yards_per_game }}
+            {{ player.rushing_yards_per_game|floatformat:1 }}
         </td>
         <td>
-            {{ player.rushing_tds_per_game }}
+            {{ player.rushing_tds_per_game|floatformat:2 }}
         </td>
         <td>
-            {{ player.targets_per_game }}
+            {{ player.targets_per_game|floatformat:1 }}
         </td>
         <td>
-            {{ player.receptions_per_game }}
+            {{ player.receptions_per_game|floatformat:1 }}
         </td>
         <td>
-            {{ player.receiving_yards_per_game }}
+            {{ player.receiving_yards_per_game|floatformat:1 }}
         </td>
         <td>
-            {{ player.receiving_tds_per_game }}
+            {{ player.receiving_tds_per_game|floatformat:2 }}
         </td>
         <td>
-            {{ player.attempts_per_game }}
+            {{ player.touches_per_game|floatformat:1 }}
         </td>
         <td>
-            {{ player.completions_per_game }}
+            {{ player.fantasy_points_per_touch|floatformat:2 }}
         </td>
         <td>
-            {{ player.passing_yards_per_game }}
+            {{ player.attempts_per_game|floatformat:1 }}
         </td>
         <td>
-            {{ player.passing_tds_per_game }}
+            {{ player.completions_per_game|floatformat:1 }}
+        </td>
+        <td>
+            {{ player.passing_yards_per_game|floatformat:1 }}
+        </td>
+        <td>
+            {{ player.passing_tds_per_game|floatformat:2 }}
         </td>
     </tr>
     {% endfor %}
 </table>
-{{ stats }}
+<br><br>
+<a href="https://censusmaps.org/resume"> please hire me I'm so tired of being a waiter </a>
 </html>

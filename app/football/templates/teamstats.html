@@ -4,7 +4,7 @@
     p{
         text-align: center;
     }
-    h1 {
+    h1, h2 {
         text-align: center;
     }
     th {
@@ -29,63 +29,121 @@
 </style>
 
 <script src="https://www.kryogenix.org/code/browser/sorttable/sorttable.js"></script>
-    <table class="sortable">
-        <thead>
-        <tr class="header">
-            <th>
-                team
-            </th>
-            <th>
-                rush_yds_per_game
-            </th>
-            <th>
-                rush_tds_per_game
-            </th>
-            <th>
-                pass_yds_per_game
-            </th>
-            <th>
-                pass_tds_per_game
-            </th>
-            <th>
-                rushing_attempts_per_game
-            </th>
-            <th>
-                passing_attempts_per_game
-            </th>
-            <th>
-                fantasy_points_per_game
-            </th>
-        </tr>
-    </thead>
-    {% for team in stats %}
-    <tr>
-        <td>
-            {{ team.team__name }}
-        </td>
-        <td>
-            {{ team.rushing_yards_per_game }}
-        </td>
-        <td>
-            {{ team.rushing_tds_per_game }}
-        </td>
-        <td>
-            {{ team.passing_yards_per_game }}
-        </td>
-        <td>
-            {{ team.passing_tds_per_game }}
-        </td>
-        <td>
-            {{ team.carries_per_game }}
-        </td>
-        <td>
-            {{ team.attempts_per_game }}
-        </td>
-        <td>
-            {{ team.fantasy_points_per_game }}
-        </td>
+<h1> TEAM STATS </h1>
+<h2>
+    <a target="_blank" href="/">See Stats By Player</a></h2>
+<table class="sortable">
+    <thead>
+    <tr class="header">
+        <th>
+            Team
+            <br>
+        </th>
+        <th>
+            Games Played
+        </th>
+        <th>
+            Fantasy Points
+        </th>
+        <th>
+            Fantasy Points / Game
+        </th>
+        <th>
+            Rush Attempts / Game
+        </th>
+        <th>
+            Rush Yds / Game
+        </th>
+        <th>
+            Rush TDs / Game
+        </th>
+        <th>
+            Targets / Game
+        </th>
+        <th>
+            Receptions / Game
+        </th>
+        <th>
+            Receiving Yds / Game
+        </th>
+        <th>
+            Receiving TDs / Game
+        </th>
+        <th>
+            Touches / Game
+        </th>
+        <th>
+            Fantasy Points / Touch
+        </th>
+        <th>
+            Pass Attempts / Game
+        </th>
+        <th>
+            Pass Completions / Game
+        </th>
+        <th>
+            Pass Yds / Game
+        </th>
+        <th>
+            Pass Tds / Game
+        </th>
     </tr>
-    {% endfor %}
+</thead>
+{% for player in stats %}
+<tr>
+    <td>
+        <a target="_blank" href="{{ player.team__espn_depth_chart }}">{{ player.team__id }} </a>
+    </td>
+    <td>
+        {{ player.games_played }}
+    </td>
+    <td>
+        {{ player.fantasy_points|floatformat:1 }}
+    </td>
+    <td>
+        {{ player.fantasy_points_per_game|floatformat:1 }}
+    </td>
+    <td>
+        {{ player.rushing_attempts_per_game|floatformat:1 }}
+    </td>
+    <td>
+        {{ player.rushing_yards_per_game|floatformat:1 }}
+    </td>
+    <td>
+        {{ player.rushing_tds_per_game|floatformat:2 }}
+    </td>
+    <td>
+        {{ player.targets_per_game|floatformat:1 }}
+    </td>
+    <td>
+        {{ player.receptions_per_game|floatformat:1 }}
+    </td>
+    <td>
+        {{ player.receiving_yards_per_game|floatformat:1 }}
+    </td>
+    <td>
+        {{ player.receiving_tds_per_game|floatformat:2 }}
+    </td>
+    <td>
+        {{ player.touches_per_game|floatformat:1 }}
+    </td>
+    <td>
+        {{ player.fantasy_points_per_touch|floatformat:2 }}
+    </td>
+    <td>
+        {{ player.attempts_per_game|floatformat:1 }}
+    </td>
+    <td>
+        {{ player.completions_per_game|floatformat:1 }}
+    </td>
+    <td>
+        {{ player.passing_yards_per_game|floatformat:1 }}
+    </td>
+    <td>
+        {{ player.passing_tds_per_game|floatformat:2 }}
+    </td>
+</tr>
+{% endfor %}
 </table>
-{{ stats }}
+<a href="https://censusmaps.org/resume"> please hire me I'm so tired of being a waiter </a>
 </html>
