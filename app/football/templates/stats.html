@@ -33,46 +33,56 @@
         <thead>
         <tr class="header">
             <th>
-                player
+                Player
             </th>
             <th>
-                team
+                Position
             </th>
             <th>
-                games played
+                Team
             </th>
             <th>
-                fantasy_points
+                Games Played
             </th>
             <th>
-                fantasy_points_per_game
+                Fantasy Points
             </th>
             <th>
-                rush_yds_per_game
+                Fantasy Points / Game
             </th>
             <th>
-                rush_tds_per_game
+                Rush Attempts / Game
+            </th>
+
+            <th>
+                Rush Yds / Game
             </th>
             <th>
-                receiving_yds_per_game
+                Rush TDs / Game
             </th>
             <th>
-                receiving_tds_per_game
+                Targets / Game
             </th>
             <th>
-                pass_yds_per_game
+                Receptions / Game
             </th>
             <th>
-                pass_tds_per_game
+                Receiving Yds / Game
             </th>
             <th>
-                rushing_attempts_per_game
+                Receiving TDs / Game
             </th>
             <th>
-                passing_attempts_per_game
+                Pass Attempts / Game
             </th>
             <th>
-                passing_attempts
+                Pass Completions / Game
+            </th>
+            <th>
+                Pass Yds / Game
+            </th>
+            <th>
+                Pass Tds / Game
             </th>
         </tr>
     </thead>
@@ -82,7 +92,10 @@
             {{ player.player__name }}
         </td>
         <td>
-            {{ player.player__team_id }}
+            <a target="_blank" href="/position_stats?pos={{ player.player__position }}">{{ player.player__position }} </a>
+        </td>
+        <td>
+            <a target="_blank" href="{{ player.player__team__espn_depth_chart }}">{{ player.player__team_id }} </a>
         </td>
         <td>
             {{ player.games_played }}
@@ -94,10 +107,19 @@
             {{ player.fantasy_points_per_game }}
         </td>
         <td>
+            {{ player.rushing_attempts_per_game }}
+        </td>
+        <td>
             {{ player.rushing_yards_per_game }}
         </td>
         <td>
             {{ player.rushing_tds_per_game }}
+        </td>
+        <td>
+            {{ player.targets_per_game }}
+        </td>
+        <td>
+            {{ player.receptions_per_game }}
         </td>
         <td>
             {{ player.receiving_yards_per_game }}
@@ -106,19 +128,16 @@
             {{ player.receiving_tds_per_game }}
         </td>
         <td>
+            {{ player.attempts_per_game }}
+        </td>
+        <td>
+            {{ player.completions_per_game }}
+        </td>
+        <td>
             {{ player.passing_yards_per_game }}
         </td>
         <td>
             {{ player.passing_tds_per_game }}
-        </td>
-        <td>
-            {{ player.carries_per_game }}
-        </td>
-        <td>
-            {{ player.attempts_per_game }}
-        </td>
-        <td>
-            {{ player.passing_attempts }}
         </td>
     </tr>
     {% endfor %}

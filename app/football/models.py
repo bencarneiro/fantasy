@@ -474,7 +474,10 @@ class GameFBR(models.Model):
 
     class Meta:
         db_table = "game_fbr"
-        managed = True
+        managed = True        
+        indexes = [
+            models.Index(fields=['dt']),
+        ]
 
 
 
@@ -508,4 +511,8 @@ class GameStats(models.Model):
 
     class Meta:
         db_table = "game_stats"
-        managed = True
+        managed = True        
+        indexes = [
+            models.Index(fields=['player']),
+            models.Index(fields=['game']),
+        ]

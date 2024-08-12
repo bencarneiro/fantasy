@@ -448,14 +448,14 @@ def donate(request):
 
 @csrf_exempt
 def getstats(request):
-
+    
     stats = GameStats.objects.filter(
-        # game__dt__lte="2021-07-01"\
-        # passing_attempts__lt=20
     )\
     .values(
         "player__name",
-        "player__team_id"
+        "player__team_id",
+        "player__team__espn_depth_chart",
+        "player__position"
     )\
     .annotate(
         games_played=Count("*"),
@@ -478,8 +478,92 @@ def getstats(request):
 
         passing_yards_per_game = Cast(F("passing_yards") / F("games_played"), FloatField()),
         passing_tds_per_game = Cast(F("passing_tds") / F("games_played"), FloatField()),
+        rushing_attempts_per_game = Cast(F("rushing_attempts") / F("games_played"), FloatField()),
         rushing_yards_per_game = Cast(F("rushing_yards") / F("games_played"), FloatField()),
         rushing_tds_per_game = Cast(F("rushing_tds") / F("games_played"), FloatField()),
+        targets_per_game = Cast(F("targets") / F("games_played"), FloatField()),
+        receptions_per_game = Cast(F("receptions") / F("games_played"), FloatField()),
+        receiving_yards_per_game = Cast(F("receiving_yards") / F("games_played"), FloatField()),
+        receiving_tds_per_game = Cast(F("receiving_tds") / F("games_played"), FloatField()),
+
+
+        attempts_per_game = Cast(F("passing_attempts") / F("games_played"), FloatField()),
+        completions_per_game = Cast(F("passing_completions") / F("games_played"), FloatField()),
+        completion_percentage = Cast(F("passing_completions") / F("passing_attempts"), FloatField()),
+        yards_per_completion = Cast(F("passing_yards") / F("passing_completions"), FloatField()),
+        yards_per_attempt = Cast(F("passing_yards") / F("passing_attempts"), FloatField()),
+
+        carries_per_game = Cast(F("rushing_attempts") / F("games_played"), FloatField()),
+        yards_per_carry = Cast(F("rushing_yards") / F("rushing_attempts"), FloatField()),
+        rushing_td_per_carry = Cast(F("rushing_tds") / F("rushing_attempts"), FloatField()),
+
+        yards_per_reception = Cast(F("receiving_yards") / F("receptions"), FloatField()),
+        yards_per_target = Cast(F("receiving_yards") / F("targets"), FloatField()),
+        catch_percentage = Cast(F("receptions") / F("targets"), FloatField()),
+
+        touches = Cast(F("receptions") + F("rushing_attempts"), FloatField()),
+
+        scrimmage_yards = Cast(F("rushing_yards") +  F("receiving_yards"), FloatField()),
+
+        total_tds = Cast(F("rushing_tds") +  F("receiving_tds"), FloatField()),
+
+        touches_per_game = Cast(F("touches") / F("games_played"), FloatField()),
+
+        fantasy_points = Cast((F("receiving_yards") * .1) + (F("rushing_yards") * .1 ) + (F("total_tds") * 6) + (F("passing_yards") * .04) +  (F("passing_tds") * 4)  + (F("fumbles_lost") * -2) + (F("interceptions") * -2) , FloatField()),
+        
+        fantasy_points_per_game =  Cast(F("fantasy_points") / F("games_played"), FloatField()),
+
+        fantasy_points_per_touch =  Cast(F("fantasy_points") / F("touches"), FloatField())
+
+    )\
+    .order_by(
+        "-touches_per_game"
+    )
+    
+    context={"stats": stats}
+    return render(request, "stats.html", context)
+
+@csrf_exempt
+def position_stats(request):
+    # if "pos" in request.GET and request.GET['pos']:
+        # qs = GameStats.objects.filter(player__position=request.GET['pos'])
+    
+    stats = GameStats.objects.filter(
+        player__position=request.GET['pos']
+    )\
+    .values(
+        "player__name",
+        "player__team_id",
+        "player__team__espn_depth_chart",
+        "player__position"
+    )\
+    .annotate(
+        games_played=Count("*"),
+        passing_completions=Sum("passing_completions"),
+        passing_attempts=Sum("passing_attempts"),
+        passing_yards=Sum("passing_yards"),
+        passing_tds=Sum("passing_tds"),
+        interceptions=Sum("interceptions"),
+        sacks=Sum("sacks"),
+        sack_yards=Sum("sack_yards"),
+        rushing_yards=Sum("rushing_yards"),
+        rushing_attempts=Sum("rushing_attempts"),
+        rushing_tds=Sum("rushing_tds"),
+        targets=Sum("targets"),
+        receptions=Sum("receptions"),
+        receiving_yards=Sum("receiving_yards"),
+        receiving_tds=Sum("receiving_tds"),
+        fumbles=Sum("fumbles"),
+        fumbles_lost=Sum("fumbles_lost"),
+
+        
+        passing_yards_per_game = Cast(F("passing_yards") / F("games_played"), FloatField()),
+        passing_tds_per_game = Cast(F("passing_tds") / F("games_played"), FloatField()),
+        rushing_attempts_per_game = Cast(F("rushing_attempts") / F("games_played"), FloatField()),
+        rushing_yards_per_game = Cast(F("rushing_yards") / F("games_played"), FloatField()),
+        rushing_tds_per_game = Cast(F("rushing_tds") / F("games_played"), FloatField()),
+        targets_per_game = Cast(F("targets") / F("games_played"), FloatField()),
+        receptions_per_game = Cast(F("receptions") / F("games_played"), FloatField()),
         receiving_yards_per_game = Cast(F("receiving_yards") / F("games_played"), FloatField()),
         receiving_tds_per_game = Cast(F("receiving_tds") / F("games_played"), FloatField()),
 
@@ -552,8 +636,11 @@ def teamstats(request):
 
         passing_yards_per_game = Cast(F("passing_yards") / F("games_played"), FloatField()),
         passing_tds_per_game = Cast(F("passing_tds") / F("games_played"), FloatField()),
+        rushing_attempts_per_game = Cast(F("rushing_attempts") / F("games_played"), FloatField()),
         rushing_yards_per_game = Cast(F("rushing_yards") / F("games_played"), FloatField()),
         rushing_tds_per_game = Cast(F("rushing_tds") / F("games_played"), FloatField()),
+        targets_per_game = Cast(F("targets") / F("games_played"), FloatField()),
+        receptions_per_game = Cast(F("receptions") / F("games_played"), FloatField()),
         receiving_yards_per_game = Cast(F("receiving_yards") / F("games_played"), FloatField()),
         receiving_tds_per_game = Cast(F("receiving_tds") / F("games_played"), FloatField()),
 
