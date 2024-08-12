@@ -49,6 +49,12 @@
             Fantasy Points / Game
         </th>
         <th>
+            Fantasy Points PPR
+        </th>
+        <th>
+            Fantasy Points PPR / Game
+        </th>
+        <th>
             Rush Attempts / Game
         </th>
         <th>
@@ -74,6 +80,9 @@
         </th>
         <th>
             Fantasy Points / Touch
+        </th>
+        <th>
+            Fantasy Points PPR / Touch
         </th>
         <th>
             Pass Attempts / Game
@@ -104,6 +113,12 @@
         {{ player.fantasy_points_per_game|floatformat:1 }}
     </td>
     <td>
+        {{ player.fantasy_points_ppr|floatformat:1 }}
+    </td>
+    <td>
+        {{ player.fantasy_points_per_game_ppr|floatformat:1 }}
+    </td>
+    <td>
         {{ player.rushing_attempts_per_game|floatformat:1 }}
     </td>
     <td>
@@ -129,6 +144,9 @@
     </td>
     <td>
         {{ player.fantasy_points_per_touch|floatformat:2 }}
+    </td>
+    <td>
+        {{ player.fantasy_points_per_touch_ppr|floatformat:2 }}
     </td>
     <td>
         {{ player.attempts_per_game|floatformat:1 }}

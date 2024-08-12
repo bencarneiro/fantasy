@@ -514,7 +514,14 @@ def getstats(request):
         
         fantasy_points_per_game =  Cast(F("fantasy_points") / F("games_played"), FloatField()),
 
-        fantasy_points_per_touch =  Cast(F("fantasy_points") / F("touches"), FloatField())
+        fantasy_points_per_touch =  Cast(F("fantasy_points") / F("touches"), FloatField()),
+
+        fantasy_points_ppr = Cast((F("receiving_yards") * .1) + (F("rushing_yards") * .1 ) + (F("receptions") * 1) + (F("total_tds") * 6) + (F("passing_yards") * .04) +  (F("passing_tds") * 4)  + (F("fumbles_lost") * -2) + (F("interceptions") * -2) , FloatField()),
+
+        fantasy_points_per_game_ppr =  Cast(F("fantasy_points_ppr") / F("games_played"), FloatField()),
+
+        fantasy_points_per_touch_ppr =  Cast(F("fantasy_points_ppr") / F("touches"), FloatField())
+
 
     )\
     .order_by(
@@ -596,7 +603,14 @@ def position_stats(request):
         
         fantasy_points_per_game =  Cast(F("fantasy_points") / F("games_played"), FloatField()),
 
-        fantasy_points_per_touch =  Cast(F("fantasy_points") / F("touches"), FloatField())
+        fantasy_points_per_touch =  Cast(F("fantasy_points") / F("touches"), FloatField()),
+
+        fantasy_points_ppr = Cast((F("receiving_yards") * .1) + (F("rushing_yards") * .1 ) + (F("receptions") * 1) + (F("total_tds") * 6) + (F("passing_yards") * .04) +  (F("passing_tds") * 4)  + (F("fumbles_lost") * -2) + (F("interceptions") * -2) , FloatField()),
+
+        fantasy_points_per_game_ppr =  Cast(F("fantasy_points_ppr") / F("games_played"), FloatField()),
+
+        fantasy_points_per_touch_ppr =  Cast(F("fantasy_points_ppr") / F("touches"), FloatField())
+
 
     )\
     .order_by(
@@ -674,7 +688,13 @@ def teamstats(request):
         
         fantasy_points_per_game =  Cast(F("fantasy_points") / F("games_played"), FloatField()),
 
-        fantasy_points_per_touch =  Cast(F("fantasy_points") / F("touches"), FloatField())
+        fantasy_points_per_touch =  Cast(F("fantasy_points") / F("touches"), FloatField()),
+
+        fantasy_points_ppr = Cast((F("receiving_yards") * .1) + (F("rushing_yards") * .1 ) + (F("receptions") * 1) + (F("total_tds") * 6) + (F("passing_yards") * .04) +  (F("passing_tds") * 4)  + (F("fumbles_lost") * -2) + (F("interceptions") * -2) , FloatField()),
+
+        fantasy_points_per_game_ppr =  Cast(F("fantasy_points_ppr") / F("games_played"), FloatField()),
+
+        fantasy_points_per_touch_ppr =  Cast(F("fantasy_points_ppr") / F("touches"), FloatField())
 
     )\
     .order_by(
