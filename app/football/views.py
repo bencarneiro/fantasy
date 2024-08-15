@@ -454,6 +454,7 @@ def getstats(request):
     )\
     .values(
         "player__name",
+        "player__id",
         "player__team_id",
         "player__team__espn_depth_chart",
         "player__position"
@@ -542,6 +543,7 @@ def position_stats(request):
         )\
         .values(
             "player__name",
+            "player__id",
             "player__team_id",
             "player__team__espn_depth_chart",
             "player__position"

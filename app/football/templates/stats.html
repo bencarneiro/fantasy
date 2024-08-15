@@ -44,6 +44,9 @@
                 Player
             </th>
             <th>
+                Stats
+            </th>
+            <th>
                 Position
             </th>
             <th>
@@ -112,6 +115,9 @@
     <tr>
         <td>
             {{ player.player__name }}
+        </td>
+        <td>
+            <a target="_blank" href="https://www.pro-football-reference.com/players/{{ player.player__id.0 }}/{{ player.player__id }}.htm"> Stats </a>
         </td>
         <td>
             <a target="_blank" href="/position_stats?pos={{ player.player__position }}">{{ player.player__position }} </a>
